@@ -9,7 +9,7 @@ interface CorsOptions {
 }
 
 const corsOptions: CorsOptions = {
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://graph-benchmarker.vercel.app"],
 };
 
 app.use(cors(corsOptions));

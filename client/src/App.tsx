@@ -4,13 +4,19 @@ import axios from "axios";
 import Home from "./pages/Home";
 import DFS from "./pages/DFS";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
 export default function App() {
   const [array, setArray] = useState([]);
 
   const fetchApi = async () => {
-    const response = await axios.get("http://localhost:8080/api/");
-    setArray(response.data.fruits);
-    console.log(response.data.fruits);
+    try {
+      const response = await axios.get(`${API_URL}/api/`);
+      setArray(response.data.fruits || []);
+      console.log(response.data.fruits);
+    } catch (e) {
+      console.warn('api fetch failed', e);
+    }
   }
 
   useEffect(() => {
