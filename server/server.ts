@@ -1,9 +1,9 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import algorithmRouter from './routes/algorithm';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-
 
 const corsOptions = {
     origin: [process.env.CLIENT_URL || "http://localhost:5173"],
@@ -11,10 +11,12 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get("/api", (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
     res.json({ fruits: ['apple', 'banana', 'cherry'] });
 });
 
+app.use('/algorithm', algorithmRouter);
+
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

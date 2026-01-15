@@ -11,7 +11,7 @@ export default function App() {
 
   const fetchApi = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/`);
+      const response = await axios.get(`${API_URL}/`);
       setArray(response.data.fruits || []);
       console.log(response.data.fruits);
     } catch (e) {
