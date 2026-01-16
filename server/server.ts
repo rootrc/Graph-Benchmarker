@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import algorithmRouter from './routes/algorithm';
+import algorithmRouter from './routes/algorithm.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
