@@ -1,9 +1,9 @@
 import HeaderLayout from "../containers/HeaderLayout";
 
-export default function Home() {
+export default function Traversal() {
   return (
     <HeaderLayout>
-      <p>I am Home</p>
+      <p>I am Traversal</p>
     </HeaderLayout>
   )
 }

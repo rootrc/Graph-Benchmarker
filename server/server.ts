@@ -15,6 +15,10 @@ app.get("/", (req: Request, res: Response) => {
     res.json({ fruits: ['apple', 'banana', 'cherry'] });
 });
 
+app.get('/health', (req: Request, res: Response) => {
+  res.json({ status: 'ok' });
+});
+
 app.use('/algorithm', algorithmRouter);
 
 app.listen(PORT, () => {
