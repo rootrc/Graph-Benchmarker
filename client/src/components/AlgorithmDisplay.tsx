@@ -1,4 +1,3 @@
-
 type Algorithm = {
   title: string;
   description: string;
@@ -27,7 +26,7 @@ export default function AlgorithmDisplay({ algorithm }: { algorithm: Algorithm }
   };
 
   return (
-    <div className="p-4 flex flex-col gap-3 w-80 bg-slate-900 text-white rounded-lg">
+    <div className="p-4 flex flex-col gap-2 w-82 bg-slate-900 text-white rounded-lg">
       <h1 className="text-2xl font-bold">{title}</h1>
       <p className="text-slate-300">{description}</p>
 
