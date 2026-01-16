@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 
@@ -10,10 +10,22 @@ type Section = {
 export default function SideBarSection({ section }: { section: Section }) {
   const storageKey = `sidebar-section-${section.title}`;
 
+  const location = useLocation();
+  const isOnThisSection = section.links.some(
+    link => location.pathname === link.to
+  );
+
   const [isOpen, setIsOpen] = useState<boolean>(() => {
     const stored = localStorage.getItem(storageKey);
-    return stored ? JSON.parse(stored) : true;
+    if (stored !== null) return JSON.parse(stored);
+    return isOnThisSection;
   });
+
+  useEffect(() => {
+    if (isOnThisSection) {
+      setIsOpen(true);
+    }
+  }, [isOnThisSection]);
 
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(isOpen));
@@ -36,15 +48,19 @@ export default function SideBarSection({ section }: { section: Section }) {
 
       {isOpen && (
         <div className="text-slate-300">
-          {section.links.map(link => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className="ml-8 pl-4 py-1 block hover:bg-slate-700 cursor-pointer"
-            >
-              {link.name}
-            </Link>
-          ))}
+          {section.links.map(link => {
+            return (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`
+                  block ml-8 pl-4 py-1 cursor-pointer hover:bg-slate-700 ${location.pathname === link.to ? "bg-slate-700 text-white font-medium" : ""}
+                `}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>

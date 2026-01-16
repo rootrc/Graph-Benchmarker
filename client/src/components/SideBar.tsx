@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SideBarSection from "../containers/SideBarSection";
 import { useServerConnectionStatus } from "../containers/useServerConnectionStatus";
 
@@ -13,6 +13,7 @@ const menuSections = [
 ];
 
 export default function SideBar({ open }: { open: boolean }) {
+  const location = useLocation();
   const isConnected = useServerConnectionStatus();
 
   return (
@@ -27,7 +28,7 @@ export default function SideBar({ open }: { open: boolean }) {
           <Link
             key="/"
             to="/"
-            className="block pl-6 pt-1 pb-2 font-medium hover:bg-slate-700"
+            className={`block pl-6 pt-1 pb-2 font-medium hover:bg-slate-700 ${location.pathname === "/" ? "bg-slate-700 text-white font-medium" : ""}`}
           >
             Home
           </Link>
