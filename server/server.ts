@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import algorithmRouter from './routes/algorithm.js';
+import graphRouter from './routes/graph.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -20,7 +21,7 @@ app.get('/health', (req: Request, res: Response) => {
 });
 
 app.use('/algorithm', algorithmRouter);
-
+app.use('/graph', graphRouter);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

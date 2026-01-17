@@ -1,19 +1,11 @@
 import AlgorithmDisplay from "../components/AlgorithmDisplay";
 import GraphLayout from "../containers/GraphLayout";
 import HeaderLayout from "../containers/HeaderLayout";
+import useFileFetcher from "../hooks/useFileFetcher";
 import type { ElementDefinition } from 'cytoscape';
 
-const elements: ElementDefinition[] = [
-  { data: { id: 'a'}, classes: 'start-node'  },
-  { data: { id: 'b'} },
-  { data: { id: 'c'} },
-
-  { data: { id: 'ab', source: 'a', target: 'b' } },
-  { data: { id: 'bc', source: 'b', target: 'c' } },
-  { data: { id: 'ca', source: 'c', target: 'a' } },
-];
-
 export default function Traversal() {
+  const { data, error, loading } = useFileFetcher<ElementDefinition[]>("test.json");
   return (
     <HeaderLayout>
       <div className="flex flex-row gap-6 w-full items-start">
@@ -42,7 +34,13 @@ export default function Traversal() {
 
         <div className="ml-auto flex items-center justify-center">
           <div className="w-132 h-132 border rounded-lg">
-            <GraphLayout elements={elements} />
+            {loading ? (
+              <p className="flex justify-center items-center w-full h-132 text-4xl text-gray-500">Loading graph...</p>
+            ) : error ? (
+              <p className="flex justify-center items-center w-full h-132 text-4xl text-red-500">Failed to load data</p>
+            ) : (
+              <GraphLayout elements={data ?? []} />
+            )}
           </div>
         </div>
 

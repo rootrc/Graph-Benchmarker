@@ -5,7 +5,6 @@ const stylesheet = [
   {
     selector: 'node',
     style: {
-      label: 'data(label)',
       'background-color': '#0074D9',
       color: '#fff',
       'text-valign': 'center',

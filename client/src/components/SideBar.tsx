@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import SideBarSection from "../containers/SideBarSection";
-import { useServerConnectionStatus } from "../containers/useServerConnectionStatus";
+import { useServerConnectionStatus } from "../hooks/useServerConnectionStatus";
 
 const menuSections = [
   {
