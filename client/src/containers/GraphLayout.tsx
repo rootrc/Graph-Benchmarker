@@ -1,17 +1,20 @@
-import type { ElementDefinition } from "cytoscape";
-import Graph from "../components/Graph";
+import { useState } from 'react';
+import type { ElementDefinition } from 'cytoscape';
+import Graph from '../components/Graph';
 
 export default function GraphLayout({ graphName, elements }: { graphName: string; elements: ElementDefinition[] }) {
+  const [runAlgorithm, setRunAlgorithm] = useState(false);
+
   return (
-    <div className="h-screen flex flex-col">
-      <Graph graphName={graphName} elements={elements} />
-      <div className="flex">
-        <div
-          className="inline-block mt-5 px-6 py-3 text-sm sm:text-base font-semibold uppercase bg-green-600 text-white rounded-sm text-center no-underline transition-all duration-200 ease-in-out hover:bg-green-500  hover:shadow-md"
-        >
-          Start
-        </div>
-      </div>
+    <div className="h-screen flex flex-col items-center">
+      <Graph graphName={graphName} elements={elements} runAlgorithm={runAlgorithm} />
+
+      <button
+        onClick={() => setRunAlgorithm(true)}
+        className="mt-5 px-6 py-3 bg-green-600 text-white font-semibold rounded hover:bg-green-500"
+      >
+        Start
+      </button>
     </div>
   );
 }

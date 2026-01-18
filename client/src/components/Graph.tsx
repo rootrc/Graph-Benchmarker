@@ -4,17 +4,25 @@ import type { ElementDefinition, Core } from 'cytoscape';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function Graph({ graphName, elements }: { graphName: string; elements: ElementDefinition[] }) {
+export default function Graph({ graphName, elements, runAlgorithm }: {
+  graphName: string; elements: ElementDefinition[]; runAlgorithm: boolean;
+}) {
   const cyRef = useRef<Core | null>(null);
-  console.log("Graph component loaded with graphName:", graphName);
+  const eventSourceRef = useRef<EventSource | null>(null);
+
   useEffect(() => {
-    const eventSource = new EventSource(`${API_URL}/algorithm/bfs?graphFile=${graphName}`);
+    if (!runAlgorithm) return;
+    if (eventSourceRef.current) return;
+
+    const eventSource = new EventSource(
+      `${API_URL}/algorithm/bfs?graphFile=${graphName}`
+    );
+    eventSourceRef.current = eventSource;
+
     eventSource.onmessage = (event) => {
-      const step = JSON.parse(event.data);
+      const { source, target } = JSON.parse(event.data);
 
       if (cyRef.current) {
-        const { source, target } = step;
-
         cyRef.current.$(`#${target}`).addClass('highlighted');
         cyRef.current.$(`#${source}-${target}`).addClass('highlighted');
         cyRef.current.$(`#${target}-${source}`).addClass('highlighted');
@@ -23,12 +31,14 @@ export default function Graph({ graphName, elements }: { graphName: string; elem
 
     eventSource.addEventListener('done', () => {
       eventSource.close();
+      eventSourceRef.current = null;
     });
 
     return () => {
       eventSource.close();
+      eventSourceRef.current = null;
     };
-  }, []);
+  }, [runAlgorithm, graphName]);
 
   return (
     <CytoscapeComponent
