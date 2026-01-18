@@ -5,7 +5,8 @@ import useFileFetcher from "../hooks/useFileFetcher";
 import type { ElementDefinition } from 'cytoscape';
 
 export default function Traversal() {
-  const { data, error, loading } = useFileFetcher<ElementDefinition[]>("test.json");
+  const fileName = "test.json";
+  const { data, error, loading } = useFileFetcher<ElementDefinition[]>(fileName);
   return (
     <HeaderLayout>
       <div className="flex flex-row gap-6 w-full items-start">
@@ -39,7 +40,7 @@ export default function Traversal() {
             ) : error ? (
               <p className="flex justify-center items-center w-full h-132 text-4xl text-red-500">Failed to load data</p>
             ) : (
-              <GraphLayout elements={data ?? []} />
+              <GraphLayout graphName={fileName} elements={data ?? []} />
             )}
           </div>
         </div>
