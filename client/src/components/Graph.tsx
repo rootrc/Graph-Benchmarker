@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Graph({ graphName, elements }: { graphName: string; elements: ElementDefinition[] }) {
   const cyRef = useRef<Core | null>(null);
-
+  console.log("Graph component loaded with graphName:", graphName);
   useEffect(() => {
     const eventSource = new EventSource(`${API_URL}/algorithm/bfs?graphFile=${graphName}`);
     eventSource.onmessage = (event) => {

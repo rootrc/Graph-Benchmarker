@@ -8,9 +8,6 @@ import { fileURLToPath } from 'url';
 
 const router = Router();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 async function runAlgorithm(
   req: Request,
   res: Response,
@@ -30,7 +27,7 @@ async function runAlgorithm(
 
   let graphData: ElementDefinition[];
   try {
-    const filePath = path.join(__dirname, '../data', graphFile);
+    const filePath = path.join(process.cwd(), "data", graphFile);
     const fileContent = await fs.readFile(filePath, 'utf-8');
     graphData = JSON.parse(fileContent);
   } catch (error) {
@@ -46,7 +43,7 @@ async function runAlgorithm(
 
   try {
     await algorithmFunction(nodes, edges, (step: Step) => {
-      res.write(`Data: ${JSON.stringify(step)}\n\n`);
+      res.write(`data: ${JSON.stringify(step)}\n\n`);
     }, delay);
   } catch (error) {
     res.write(`Error running algorithm: ${error}\n\n`);
