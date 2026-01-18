@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
-import { Step } from '../algorithms/types';
-import { bfs } from '../algorithms/bfs';
+import { Step } from '../algorithms/types.js';
+import { bfs } from '../algorithms/bfs.js';
 import type { ElementDefinition } from 'cytoscape';
 import fs from 'fs/promises';
 import path from 'path';
