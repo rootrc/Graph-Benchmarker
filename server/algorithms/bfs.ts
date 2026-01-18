@@ -1,6 +1,6 @@
 import { Step } from './types';
 import type { ElementDefinition } from 'cytoscape';
-import { getAdjacencyList } from './utility';
+import { getAdjacencyList } from './utility.js';
 
 export async function bfs(
   nodes: ElementDefinition[],
