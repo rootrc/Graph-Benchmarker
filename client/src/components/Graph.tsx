@@ -1,18 +1,7 @@
 import CytoscapeComponent from 'react-cytoscapejs';
 import type { ElementDefinition, Core } from 'cytoscape';
-import { useRef, useEffect } from 'react';
 
-export default function Graph({ elements, algorithm}: {
-  elements: ElementDefinition[]; algorithm?: (cy: Core) => void;
-}) {
-  const cyRef = useRef<Core | null>(null);
-
-  useEffect(() => {
-    if (cyRef.current && algorithm) {
-      algorithm(cyRef.current);
-    }
-  }, [algorithm]);
-
+export default function Graph({ elements, cyRef: graphRef }: { elements: ElementDefinition[]; cyRef?: React.RefObject<Core | null>; }) {
   return (
     <CytoscapeComponent
       elements={elements}
@@ -25,7 +14,9 @@ export default function Graph({ elements, algorithm}: {
         { selector: 'edge.highlighted', style: { width: 3, 'line-color': '#FF4136' } },
       ]}
       style={{ width: '528px', height: '528px' }}
-      cy={(cy) => { cyRef.current = cy; }}
+      cy={(cy) => {
+        if (graphRef) graphRef.current = cy;
+      }}
     />
   );
 }
