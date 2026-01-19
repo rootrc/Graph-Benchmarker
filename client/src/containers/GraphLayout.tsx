@@ -44,7 +44,7 @@ export default function GraphLayout({ graphName, algorithmName }: { graphName: s
   let graph;
   if (error) graph = <p className="flex justify-center items-center w-full h-132 text-4xl text-red-500">Failed to load data</p>;
   if (loading) graph = <p className="flex justify-center items-center w-full h-132 text-4xl text-gray-500">Loading graph...</p>;
-  if (data) graph = <Graph elements={data ?? []} cyRef={graphRef} />;
+  if (data) graph = <Graph elements={data ?? []} graphRef={graphRef} />;
   return (
     <div className="h-screen flex flex-col items-center">
       {graph}

@@ -1,7 +1,7 @@
 import CytoscapeComponent from 'react-cytoscapejs';
 import type { ElementDefinition, Core } from 'cytoscape';
 
-export default function Graph({ elements, cyRef: graphRef }: { elements: ElementDefinition[]; cyRef?: React.RefObject<Core | null>; }) {
+export default function Graph({ elements, graphRef }: { elements: ElementDefinition[]; graphRef?: React.RefObject<Core | null>; }) {
   return (
     <CytoscapeComponent
       elements={elements}
@@ -14,8 +14,8 @@ export default function Graph({ elements, cyRef: graphRef }: { elements: Element
         { selector: 'edge.highlighted', style: { width: 3, 'line-color': '#FF4136' } },
       ]}
       style={{ width: '528px', height: '528px' }}
-      cy={(cy) => {
-        if (graphRef) graphRef.current = cy;
+      cy={(graph) => {
+        if (graphRef) graphRef.current = graph;
       }}
     />
   );
