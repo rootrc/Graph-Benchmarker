@@ -41,13 +41,13 @@ export default function GraphLayout({ graphName, algorithmName }: { graphName: s
     setRunAlgorithm(false);
   };
 
-  if (loading) return <p className="flex justify-center items-center w-full h-132 text-4xl text-gray-500">Loading graph...</p>;
-  if (error) return <p className="flex justify-center items-center w-full h-132 text-4xl text-red-500">Failed to load data</p>;
-
+  let graph;
+  if (error) graph = <p className="flex justify-center items-center w-full h-132 text-4xl text-red-500">Failed to load data</p>;
+  if (loading) graph = <p className="flex justify-center items-center w-full h-132 text-4xl text-gray-500">Loading graph...</p>;
+  if (data) graph = <Graph elements={data ?? []} cyRef={graphRef} />;
   return (
     <div className="h-screen flex flex-col items-center">
-      <Graph elements={data ?? []} cyRef={graphRef} />
-
+      {graph}
       <div className="mt-5 flex gap-3">
         <button
           onClick={() => setRunAlgorithm(true)}
