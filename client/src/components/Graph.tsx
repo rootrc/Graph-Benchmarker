@@ -1,44 +1,17 @@
-import { useEffect, useRef } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import type { ElementDefinition, Core } from 'cytoscape';
+import { useRef, useEffect } from 'react';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
-export default function Graph({ graphName, elements, runAlgorithm }: {
-  graphName: string; elements: ElementDefinition[]; runAlgorithm: boolean;
+export default function Graph({ elements, algorithm}: {
+  elements: ElementDefinition[]; algorithm?: (cy: Core) => void;
 }) {
   const cyRef = useRef<Core | null>(null);
-  const eventSourceRef = useRef<EventSource | null>(null);
 
   useEffect(() => {
-    if (!runAlgorithm) return;
-    if (eventSourceRef.current) return;
-
-    const eventSource = new EventSource(
-      `${API_URL}/algorithm/bfs?graphFile=${graphName}`
-    );
-    eventSourceRef.current = eventSource;
-
-    eventSource.onmessage = (event) => {
-      const { source, target } = JSON.parse(event.data);
-
-      if (cyRef.current) {
-        cyRef.current.$(`#${target}`).addClass('highlighted');
-        cyRef.current.$(`#${source}-${target}`).addClass('highlighted');
-        cyRef.current.$(`#${target}-${source}`).addClass('highlighted');
-      }
-    };
-
-    eventSource.addEventListener('done', () => {
-      eventSource.close();
-      eventSourceRef.current = null;
-    });
-
-    return () => {
-      eventSource.close();
-      eventSourceRef.current = null;
-    };
-  }, [runAlgorithm, graphName]);
+    if (cyRef.current && algorithm) {
+      algorithm(cyRef.current);
+    }
+  }, [algorithm]);
 
   return (
     <CytoscapeComponent
