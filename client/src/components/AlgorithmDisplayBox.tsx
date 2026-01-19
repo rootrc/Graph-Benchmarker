@@ -1,4 +1,4 @@
-type Algorithm = {
+export type Algorithm = {
   title: string;
   description: string;
   complexity: Complexity;
@@ -9,19 +9,16 @@ type Complexity = {
   space: string;
 };
 
-export default function AlgorithmDisplay({ algorithm }: { algorithm: Algorithm }) {
+export default function AlgorithmDisplayBox({ algorithm }: { algorithm: Algorithm }) {
   const { title, description, complexity } = algorithm;
   const getComplexityClass = (complexity: string) => {
     const c = complexity;
-
     if (c.includes("2") || c.includes("!") || c.includes("³")) {
       return "text-red-500";
     }
-
     if (c.includes("²") || c.includes("Vlog(E)") || c.includes("Vlog(V)") || c.includes("Elog(E)") || c.includes("Elog(V)")) {
       return "text-orange-500";
     }
-
     return "text-green-500";
   };
 

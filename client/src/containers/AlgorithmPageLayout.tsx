@@ -2,10 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import type { ElementDefinition, Core } from 'cytoscape';
 import Graph from '../components/Graph';
 import useFileFetcher from '../hooks/useFileFetcher';
+import AlgorithmDisplayBox from '../components/AlgorithmDisplayBox';
+import type {Algorithm} from '../components/AlgorithmDisplayBox';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function GraphLayout({ graphName, algorithmName }: { graphName: string; algorithmName: string; }) {
+export default function AlgorithmPageLayout({ algorithmName, algorithmDisplayBox }: { algorithmName: string; algorithmDisplayBox: Algorithm[] }) {
+  const graphName = "test.json";
   const { data, error, loading } = useFileFetcher<ElementDefinition[]>(graphName);
   const [runAlgorithm, setRunAlgorithm] = useState(false);
   const graphRef = useRef<Core | null>(null);
@@ -46,24 +49,33 @@ export default function GraphLayout({ graphName, algorithmName }: { graphName: s
   if (loading) graph = <p className="flex justify-center items-center w-full h-132 text-4xl text-gray-500">Loading graph...</p>;
   if (data) graph = <Graph elements={data ?? []} graphRef={graphRef} />;
   return (
-    <div className="h-screen flex flex-col items-center">
-      {graph}
-      <div className="mt-5 flex gap-3">
-        <button
-          onClick={() => setRunAlgorithm(true)}
-          disabled={runAlgorithm || !data}
-          className={`px-6 py-3 font-semibold rounded bg-green-600 text-white hover:bg-green-500 transition-opacity duration-300 ease-in-out ${runAlgorithm || !data ? 'opacity-50 cursor-not-allowed hover:bg-green-600' : 'opacity-100'}`}
-        >
-          Start
-        </button>
+    <div className="flex flex-row gap-6 w-full items-start">
+      <div className="flex flex-row gap-4 flex-wrap">
+        {algorithmDisplayBox.map((algorithm, index) => (
+          <AlgorithmDisplayBox key={index} algorithm={algorithm} />
+        ))}
+      </div>
+      <div className="ml-auto flex items-center justify-center">
+        <div className="w-132 h-132 border rounded-lg">
+          {graph}
+          <div className="mt-5 flex gap-3">
+            <button
+              onClick={() => setRunAlgorithm(true)}
+              disabled={runAlgorithm || !data}
+              className={`px-6 py-3 font-semibold rounded bg-green-600 text-white hover:bg-green-500 transition-opacity duration-300 ease-in-out ${runAlgorithm || !data ? 'opacity-50 cursor-not-allowed hover:bg-green-600' : 'opacity-100'}`}
+            >
+              Start
+            </button>
 
-        <button
-          onClick={restart}
-          disabled={!data || !runAlgorithm}
-          className={`px-6 py-3 font-semibold rounded bg-blue-600 text-white hover:bg-blue-500 transition-opacity duration-300 ease-in-out ${!data || !runAlgorithm ? 'opacity-50 cursor-not-allowed hover:bg-blue-600' : 'opacity-100'}`}
-        >
-          Restart
-        </button>
+            <button
+              onClick={restart}
+              disabled={!data || !runAlgorithm}
+              className={`px-6 py-3 font-semibold rounded bg-blue-600 text-white hover:bg-blue-500 transition-opacity duration-300 ease-in-out ${!data || !runAlgorithm ? 'opacity-50 cursor-not-allowed hover:bg-blue-600' : 'opacity-100'}`}
+            >
+              Restart
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
