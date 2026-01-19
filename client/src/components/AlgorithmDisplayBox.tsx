@@ -9,7 +9,7 @@ type Complexity = {
   space: string;
 };
 
-export default function AlgorithmDisplayBox({ algorithm }: { algorithm: Algorithm }) {
+export default function AlgorithmDisplayBox({ algorithm }: { algorithm: Algorithm; liveSteps: { source: string; target: string }[] }) {
   const { title, description, complexity } = algorithm;
   const getComplexityClass = (complexity: string) => {
     const c = complexity;
