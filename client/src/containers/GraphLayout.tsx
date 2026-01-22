@@ -3,27 +3,44 @@ import useFileFetcher from "../hooks/useFileFetcher";
 import type { ElementDefinition, Core } from 'cytoscape';
 import { useEffect, useRef } from "react";
 
-export default function GraphLayout({ graphName, runAlgorithm, setRunAlgorithm, restart, liveSteps }: { graphName: string; runAlgorithm: boolean; setRunAlgorithm: React.Dispatch<React.SetStateAction<boolean>>; restart: () => void; liveSteps: { source: string; target: string }[] }) {
+export default function GraphLayout({ graphName, runAlgorithm, setRunAlgorithm, restart, liveSteps }: { graphName: string; runAlgorithm: boolean; setRunAlgorithm: React.Dispatch<React.SetStateAction<boolean>>; restart: () => void; liveSteps: { id: number; source: string; target: string }[] }) {
   const { data, error, loading } = useFileFetcher<ElementDefinition[]>(graphName);
   const graphRef = useRef<Core | null>(null);
 
+  const prevStepsLength = useRef(0);
+
   useEffect(() => {
     const graph = graphRef.current;
-    if (!graph) {
-      return;
-    }
+    if (!graph) return;
     if (liveSteps.length == 0) {
-      graph.elements().removeClass('highlighted');
+      graph.elements().removeClass('highlighted0');
+      graph.elements().removeClass('highlighted1');
+      prevStepsLength.current = 0;
       return;
     }
-    const step = liveSteps[liveSteps.length - 1];
-    if (step) {
-      graph.$(`#${step.target}`).addClass('highlighted');
-      graph.$(`#${step.source}-${step.target}`).addClass('highlighted');
-      graph.$(`#${step.target}-${step.source}`).addClass('highlighted');
-    }
-    
-  }, [liveSteps]);
+
+    const newSteps = liveSteps.slice(prevStepsLength.current);
+
+    newSteps.forEach((step) => {
+      if (!step) return;
+      switch (step.id) {
+        case 0:
+          graph.$(`#${step.target}`).addClass('highlighted0');
+          graph.$(`#${step.source}-${step.target}`).addClass('highlighted0');
+          graph.$(`#${step.target}-${step.source}`).addClass('highlighted0');
+          break;
+        case 1:
+          graph.$(`#${step.target}`).addClass('highlighted1');
+          graph.$(`#${step.source}-${step.target}`).addClass('highlighted1');
+          graph.$(`#${step.target}-${step.source}`).addClass('highlighted1');
+          break;
+        default:
+          break;
+      }
+    });
+
+    prevStepsLength.current = liveSteps.length;
+  }, [liveSteps, graphRef]);
 
   let graphDisplay;
   if (error) graphDisplay = <p className="flex justify-center items-center w-full h-132 text-4xl text-red-500">Failed to load data</p>;

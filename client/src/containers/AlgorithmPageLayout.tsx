@@ -5,10 +5,10 @@ import type { Algorithm } from '../components/AlgorithmDisplayBox';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function AlgorithmPageLayout({ algorithmName, algorithmDisplayBox }: { algorithmName: string; algorithmDisplayBox: Algorithm[] }) {
+export default function AlgorithmPageLayout({ algorithmName, algorithmName1, algorithmDisplayBox }: { algorithmName: string; algorithmName1?: string; algorithmDisplayBox: Algorithm[] }) {
   const graphName = "test.json";
   const [runAlgorithm, setRunAlgorithm] = useState(false);
-  const [graphSteps, setGraphSteps] = useState<{ source: string; target: string }[]>([]);
+  const [graphSteps, setGraphSteps] = useState<{ id: number; source: string; target: string }[]>([]);
   const [metricSteps, setMetricSteps] = useState<{ type: string; metricValue: number }[]>([]);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmDisplayBox
         eventSource.close();
         return;
       } else if (type === "edge") {
-        setGraphSteps(prev => [...prev, { source, target }]);
+        setGraphSteps(prev => [...prev, {id: 0, source, target }]);
       } else {
         setMetricSteps(prev => [...prev, { type, metricValue }]);
       }
@@ -31,6 +31,28 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmDisplayBox
     };
 
   }, [runAlgorithm, graphName, algorithmName]);
+  if (algorithmName1) {
+    useEffect(() => {
+      if (!runAlgorithm) return;
+      const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmName1}?graphFile=${graphName}`);
+      eventSource.onmessage = (event) => {
+        const { type, source, target, metricValue } = JSON.parse(event.data);
+        if (type === "done") {
+          eventSource.close();
+          return;
+        } else if (type === "edge") {
+          setGraphSteps(prev => [...prev, {id: 1, source, target }]);
+        } else {
+          setMetricSteps(prev => [...prev, { type, metricValue }]);
+        }
+      };
+
+      return () => {
+        eventSource.close();
+      };
+
+    }, [runAlgorithm, graphName, algorithmName1]);
+  }
 
   const restart = () => {
     setGraphSteps([]);
@@ -43,7 +65,7 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmDisplayBox
       <div className="flex flex-row gap-4 flex-wrap">
         {algorithmDisplayBox.map((algorithm, index) => (
           <AlgorithmDisplayBox
-            key={index}
+            index={index}
             algorithm={algorithm}
             liveSteps={metricSteps}
           />

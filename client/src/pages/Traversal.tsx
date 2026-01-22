@@ -4,28 +4,30 @@ import HeaderLayout from "../containers/HeaderLayout";
 const algorithms = [
   {
     title: "DFS",
+    algorithmName: "dfs",
     description: "Depth First Search",
     complexity: {
       time: "O(V+E)",
       space: "O(V)",
     },
     metricDisplay: [
-      { type: "metric-nodesVisited", display: "Visited Nodes" },
-      { type: "metric-edgesVisited", display: "Visited Edges" },
-      { type: "metric-maxDequeSize", display: "Max Stack Size" },
+      { type: "dfs-nodesVisited", display: "Visited Nodes" },
+      { type: "dfs-edgesVisited", display: "Visited Edges" },
+      { type: "dfs-maxDequeSize", display: "Max Stack Size" },
     ],
   },
   {
     title: "BFS",
+    algorithmName: "bfs",
     description: "Breadth First Search",
     complexity: {
       time: "O(V+E)",
       space: "O(V)",
     },
     metricDisplay: [
-      { type: "metric-nodesVisited", display: "Visited Nodes" },
-      { type: "metric-edgesVisited", display: "Visited Edges" },
-      { type: "metric-maxDequeSize", display: "Max Queue Size" },
+      { type: "bfs-nodesVisited", display: "Visited Nodes" },
+      { type: "bfs-edgesVisited", display: "Visited Edges" },
+      { type: "bfs-maxDequeSize", display: "Max Queue Size" },
     ],
   },
 ];
@@ -33,7 +35,7 @@ const algorithms = [
 export default function Traversal() {
   return (
     <HeaderLayout>
-      <AlgorithmPageLayout algorithmName="bfs" algorithmDisplayBox={algorithms} />
+      <AlgorithmPageLayout algorithmName="dfs" algorithmName1 = "bfs" algorithmDisplayBox={algorithms} />
     </HeaderLayout>
   );
 }

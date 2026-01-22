@@ -17,10 +17,9 @@ export type MetricDisplay = {
   display: string;
 };
 
-export default function AlgorithmDisplayBox({ algorithm, liveSteps }: { algorithm: Algorithm; liveSteps: { type: string; metricValue: number }[] }) {
+export default function AlgorithmDisplayBox({ index, algorithm, liveSteps }: { index: number; algorithm: Algorithm; liveSteps: { type: string; metricValue: number }[] }) {
   const { title, description, complexity } = algorithm;
   const [metrics, setMetrics] = useState<Record<string, number>>({});
-
   const getComplexityClass = (complexity: string) => {
     const c = complexity;
     if (c.includes("2") || c.includes("!") || c.includes("³")) {
@@ -31,34 +30,38 @@ export default function AlgorithmDisplayBox({ algorithm, liveSteps }: { algorith
     }
     return "text-green-500";
   };
-const lastStepIndex = useRef(0);
 
-useEffect(() => {
-  if (liveSteps.length === 0) {
-    lastStepIndex.current = 0;
-    setMetrics({});
-    return;
-  }
+  const lastStepIndex = useRef(0);
 
-  if (lastStepIndex.current >= liveSteps.length) return;
-
-  const newSteps = liveSteps.slice(lastStepIndex.current);
-
-  setMetrics(prevMetrics => {
-    const updatedMetrics = { ...prevMetrics };
-    for (const step of newSteps) {
-      updatedMetrics[step.type] = step.metricValue;
+  useEffect(() => {
+    if (liveSteps.length === 0) {
+      lastStepIndex.current = 0;
+      setMetrics({});
+      return;
     }
-    return updatedMetrics;
-  });
 
-  lastStepIndex.current = liveSteps.length;
-}, [liveSteps]);
+    if (lastStepIndex.current >= liveSteps.length) return;
+
+    const newSteps = liveSteps.slice(lastStepIndex.current);
+
+    setMetrics(prevMetrics => {
+      const updatedMetrics = { ...prevMetrics };
+      for (const step of newSteps) {
+        updatedMetrics[step.type] = step.metricValue;
+      }
+      return updatedMetrics;
+    });
+
+    lastStepIndex.current = liveSteps.length;
+  }, [liveSteps]);
 
 
   return (
     <div className="p-4 flex flex-col gap-2 w-82 bg-slate-900 text-white rounded-lg">
-      <h1 className="text-2xl font-bold">{title}</h1>
+      <h1 className="flex items-center text-2xl font-bold">
+        {title}
+        <span className={`ml-2 w-4 h-4 ${index === 0 ? "bg-blue-500" : "bg-red-500"} rounded-full`}></span>
+      </h1>
       <p className="text-slate-300">{description}</p>
 
       <div className="border border-slate-700 rounded-md overflow-hidden">
