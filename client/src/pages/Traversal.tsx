@@ -9,6 +9,11 @@ const algorithms = [
       time: "O(V+E)",
       space: "O(V)",
     },
+    metricDisplay: [
+      { type: "metric-nodesVisited", display: "Visited Nodes" },
+      { type: "metric-edgesVisited", display: "Visited Edges" },
+      { type: "metric-maxDequeSize", display: "Max Stack Size" },
+    ],
   },
   {
     title: "BFS",
@@ -17,6 +22,11 @@ const algorithms = [
       time: "O(V+E)",
       space: "O(V)",
     },
+    metricDisplay: [
+      { type: "metric-nodesVisited", display: "Visited Nodes" },
+      { type: "metric-edgesVisited", display: "Visited Edges" },
+      { type: "metric-maxDequeSize", display: "Max Queue Size" },
+    ],
   },
 ];
 

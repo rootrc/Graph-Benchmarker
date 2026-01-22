@@ -1,25 +1,29 @@
 import Graph from "../components/Graph";
 import useFileFetcher from "../hooks/useFileFetcher";
 import type { ElementDefinition, Core } from 'cytoscape';
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function GraphLayout({ graphName, runAlgorithm, setRunAlgorithm, restart, liveSteps }: { graphName: string; runAlgorithm: boolean; setRunAlgorithm: React.Dispatch<React.SetStateAction<boolean>>; restart: () => void; liveSteps: { source: string; target: string }[] }) {
   const { data, error, loading } = useFileFetcher<ElementDefinition[]>(graphName);
   const graphRef = useRef<Core | null>(null);
-  
-  const graph = graphRef.current;
-  if (graph) {
+
+  useEffect(() => {
+    const graph = graphRef.current;
+    if (!graph) {
+      return;
+    }
     if (liveSteps.length == 0) {
       graph.elements().removeClass('highlighted');
-    } else {
-      const step = liveSteps[liveSteps.length - 1];
-      if (step) {
-        graph.$(`#${step.target}`).addClass('highlighted');
-        graph.$(`#${step.source}-${step.target}`).addClass('highlighted');
-        graph.$(`#${step.target}-${step.source}`).addClass('highlighted');
-      }
+      return;
     }
-  }
+    const step = liveSteps[liveSteps.length - 1];
+    if (step) {
+      graph.$(`#${step.target}`).addClass('highlighted');
+      graph.$(`#${step.source}-${step.target}`).addClass('highlighted');
+      graph.$(`#${step.target}-${step.source}`).addClass('highlighted');
+    }
+    
+  }, [liveSteps]);
 
   let graphDisplay;
   if (error) graphDisplay = <p className="flex justify-center items-center w-full h-132 text-4xl text-red-500">Failed to load data</p>;

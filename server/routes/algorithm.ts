@@ -17,7 +17,7 @@ async function runAlgorithm(
     onStep: (step: Step) => void,
     delay: number
   ) => Promise<void>,
-  delay: number = 100
+  delay: number = 50
 ) {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');

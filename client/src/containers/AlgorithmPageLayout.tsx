@@ -9,26 +9,32 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmDisplayBox
   const graphName = "test.json";
   const [runAlgorithm, setRunAlgorithm] = useState(false);
   const [graphSteps, setGraphSteps] = useState<{ source: string; target: string }[]>([]);
+  const [metricSteps, setMetricSteps] = useState<{ type: string; metricValue: number }[]>([]);
 
   useEffect(() => {
     if (!runAlgorithm) return;
     const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmName}?graphFile=${graphName}`);
     eventSource.onmessage = (event) => {
-      const { source, target } = JSON.parse(event.data);
-      setGraphSteps(prev => [...prev, { source, target }]);
+      const { type, source, target, metricValue } = JSON.parse(event.data);
+      if (type === "done") {
+        eventSource.close();
+        return;
+      } else if (type === "edge") {
+        setGraphSteps(prev => [...prev, { source, target }]);
+      } else {
+        setMetricSteps(prev => [...prev, { type, metricValue }]);
+      }
     };
-
-    eventSource.addEventListener('done', () => {
-      eventSource.close();
-    });
 
     return () => {
       eventSource.close();
     };
+
   }, [runAlgorithm, graphName, algorithmName]);
 
   const restart = () => {
     setGraphSteps([]);
+    setMetricSteps([]);
     setRunAlgorithm(false);
   };
 
@@ -39,7 +45,7 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmDisplayBox
           <AlgorithmDisplayBox
             key={index}
             algorithm={algorithm}
-            liveSteps={graphSteps}
+            liveSteps={metricSteps}
           />
         ))}
       </div>
