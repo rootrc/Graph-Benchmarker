@@ -13,7 +13,8 @@ const algorithms = [
     metricDisplay: [
       { type: "dfs-nodesVisited", display: "Visited Nodes" },
       { type: "dfs-edgesVisited", display: "Visited Edges" },
-      { type: "dfs-maxDequeSize", display: "Max Stack Size" },
+      { type: "dfs-maxStackSize", display: "Max Stack Size" },
+      { type: "dfs-averageStackSize", display: "Average Stack Size" },
     ],
   },
   {
@@ -27,7 +28,8 @@ const algorithms = [
     metricDisplay: [
       { type: "bfs-nodesVisited", display: "Visited Nodes" },
       { type: "bfs-edgesVisited", display: "Visited Edges" },
-      { type: "bfs-maxDequeSize", display: "Max Queue Size" },
+      { type: "bfs-maxQueueSize", display: "Max Queue Size" },
+      { type: "bfs-averageQueueSize", display: "Average Queue Size" },
     ],
   },
 ];

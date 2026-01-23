@@ -10,7 +10,7 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmName1, alg
   const [runAlgorithm, setRunAlgorithm] = useState(false);
   const [graphSteps, setGraphSteps] = useState<{ id: number; source: string; target: string }[]>([]);
   const [metricSteps, setMetricSteps] = useState<{ type: string; metricValue: number }[]>([]);
-
+  
   useEffect(() => {
     if (!runAlgorithm) return;
     const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmName}?graphFile=${graphName}`);
@@ -65,6 +65,7 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmName1, alg
       <div className="flex flex-row gap-4 flex-wrap">
         {algorithmDisplayBox.map((algorithm, index) => (
           <AlgorithmDisplayBox
+            key={index}
             index={index}
             algorithm={algorithm}
             liveSteps={metricSteps}

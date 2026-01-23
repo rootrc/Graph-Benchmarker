@@ -9,6 +9,16 @@ export default function GraphLayout({ graphName, runAlgorithm, setRunAlgorithm, 
 
   const prevStepsLength = useRef(0);
 
+  const transformedData: ElementDefinition[] = (data?? []).map(el => {
+    return {
+      ...el,
+      data: {
+        ...el.data,
+        scaledWeight: (el.data.weight ? Math.sqrt(el.data.weight) : 3)
+      }
+    };
+  });
+
   useEffect(() => {
     const graph = graphRef.current;
     if (!graph) return;
@@ -45,7 +55,7 @@ export default function GraphLayout({ graphName, runAlgorithm, setRunAlgorithm, 
   let graphDisplay;
   if (error) graphDisplay = <p className="flex justify-center items-center w-full h-132 text-4xl text-red-500">Failed to load data</p>;
   else if (loading) graphDisplay = <p className="flex justify-center items-center w-full h-132 text-4xl text-gray-500">Loading graph...</p>;
-  else graphDisplay = <Graph elements={data ?? []} graphRef={graphRef} />;
+  else graphDisplay = <Graph elements={transformedData ?? []} graphRef={graphRef} />;
 
   return (
     <div className="ml-auto flex items-center justify-center">

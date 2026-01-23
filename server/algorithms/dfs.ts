@@ -16,13 +16,14 @@ export async function dfs(
 
   let nodesVisited = 1;
   let edgesVisited = 0;
-  let maxDequeSize = stack.length;
+  let maxStackSize = 1;
+  let stackSizeSum = 1;
 
   while (stack.length > 0) {
     const u = stack.pop()!;
-    if (maxDequeSize < stack.length) {
-      maxDequeSize = stack.length;
-      onStep({type: "dfs-maxDequeSize", metricValue: maxDequeSize});
+    if (maxStackSize < stack.length) {
+      maxStackSize = stack.length;
+      onStep({type: "dfs-maxStackSize", metricValue: maxStackSize});
     }
     for (const v of adjList[u]) {
       edgesVisited++;
@@ -30,9 +31,12 @@ export async function dfs(
       if (!visited[v]) {
         visited[v] = true;
         stack.push(v);
+        console.log(stack.length);
         nodesVisited++;
         onStep({type: "dfs-nodesVisited", metricValue: nodesVisited});
         onStep({ type: "edge", source: u.toString(), target: v.toString() });
+        stackSizeSum += stack.length;
+        onStep({type: "dfs-averageStackSize", metricValue: Math.round(stackSizeSum / nodesVisited * 100) / 100});
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }

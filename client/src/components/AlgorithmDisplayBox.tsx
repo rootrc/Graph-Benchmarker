@@ -83,11 +83,11 @@ export default function AlgorithmDisplayBox({ index, algorithm, liveSteps }: { i
             Metrics
           </div>
 
-          <div className="flex flex-col divide-y divide-slate-700">
+          <div className="flex flex-col p-2">
             {algorithm.metricDisplay.map((metric) => (
               <div
                 key={metric.type}
-                className="flex justify-between p-2 text-sm"
+                className="flex justify-between text-sm"
               >
                 <span className="text-slate-300">
                   {metric.display}

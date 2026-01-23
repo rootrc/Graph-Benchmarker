@@ -16,13 +16,14 @@ export async function bfs(
 
   let nodesVisited = 1;
   let edgesVisited = 0;
-  let maxDequeSize = queue.length;
+  let maxQueueSize = 1;
+  let queueSizeSum = 1;
 
   while (queue.length > 0) {
     const u = queue.shift()!;
-    if (maxDequeSize < queue.length) {
-      maxDequeSize = queue.length;
-      onStep({type: "bfs-maxDequeSize", metricValue: maxDequeSize});
+    if (maxQueueSize < queue.length) {
+      maxQueueSize = queue.length;
+      onStep({type: "bfs-maxQueueSize", metricValue: maxQueueSize});
     }
     for (const v of adjList[u]) {
       edgesVisited++;
@@ -33,6 +34,8 @@ export async function bfs(
         nodesVisited++;
         onStep({type: "bfs-nodesVisited", metricValue: nodesVisited});
         onStep({ type: "edge", source: u.toString(), target: v.toString() });
+        queueSizeSum += queue.length;
+        onStep({type: "bfs-averageQueueSize", metricValue: Math.round(queueSizeSum / nodesVisited * 100) / 100});
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
