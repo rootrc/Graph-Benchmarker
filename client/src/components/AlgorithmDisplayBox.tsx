@@ -17,7 +17,14 @@ export type MetricDisplay = {
   display: string;
 };
 
-export default function AlgorithmDisplayBox({ index, algorithm, liveSteps }: { index: number; algorithm: Algorithm; liveSteps: { type: string; metricValue: number }[] }) {
+export default function AlgorithmDisplayBox({
+  index, algorithm, showAlgorithm, setShowAlgorithm, liveSteps }: {
+    index: number;
+    algorithm: Algorithm;
+    showAlgorithm: boolean;
+    setShowAlgorithm: React.Dispatch<React.SetStateAction<boolean>>;
+    liveSteps: { type: string; metricValue: number }[]
+  }) {
   const { title, description, complexity } = algorithm;
   const [metrics, setMetrics] = useState<Record<string, number>>({});
   const getComplexityClass = (complexity: string) => {
@@ -58,10 +65,22 @@ export default function AlgorithmDisplayBox({ index, algorithm, liveSteps }: { i
 
   return (
     <div className="p-4 flex flex-col gap-2 w-82 bg-slate-900 text-white rounded-lg">
-      <h1 className="flex items-center text-2xl font-bold">
-        {title}
-        <span className={`ml-2 w-4 h-4 ${index === 0 ? "bg-blue-500" : "bg-red-500"} rounded-full`}></span>
-      </h1>
+      <div className="flex items-center justify-between">
+        <h1 className="flex items-center text-2xl font-bold">
+          {title}
+          <span
+            className={`ml-2 mt-1 w-4 h-4 transition-all duration-300 ${showAlgorithm ? (index === 0 ? "bg-blue-500" : "bg-red-500") : "bg-gray-500"} rounded-full`}
+          />
+        </h1>
+        <button
+          onClick={() => setShowAlgorithm(prev => !prev)}
+          className={`px-3 py-1.5 rounded-md bg-slate-800 text-slate-100 border border-slate-700 hover:bg-slate-700 hover:border-slate-500 transition-all duration-300 ease-in-out cursor-pointer
+          ${!showAlgorithm ? 'opacity-40' : 'hover:opacity-70'}`}
+          aria-label="Hide algorithm"
+        >
+          Hide
+        </button>
+      </div>
       <p className="text-slate-300">{description}</p>
 
       <div className="border border-slate-700 rounded-md overflow-hidden">

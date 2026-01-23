@@ -8,6 +8,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function AlgorithmPageLayout({ algorithmName, algorithmName1, algorithmDisplayBox }: { algorithmName: string; algorithmName1?: string; algorithmDisplayBox: Algorithm[] }) {
   const graphName = "test.json";
   const [runAlgorithm, setRunAlgorithm] = useState(false);
+  const [showAlgorithm, setShowAlgorithm] = useState(true);
+  const [showAlgorithm1, setShowAlgorithm1] = useState(true);
+  const setters: boolean[] = [showAlgorithm, showAlgorithm1];
+  const setters1: React.Dispatch<React.SetStateAction<boolean>>[] = [setShowAlgorithm, setShowAlgorithm1];
   const [graphSteps, setGraphSteps] = useState<{ id: number; source: string; target: string }[]>([]);
   const [metricSteps, setMetricSteps] = useState<{ type: string; metricValue: number }[]>([]);
   
@@ -68,6 +72,8 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmName1, alg
             key={index}
             index={index}
             algorithm={algorithm}
+            showAlgorithm={setters[index]}
+            setShowAlgorithm={setters1[index]}
             liveSteps={metricSteps}
           />
         ))}
@@ -77,6 +83,8 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmName1, alg
         runAlgorithm={runAlgorithm}
         setRunAlgorithm={setRunAlgorithm}
         restart={restart}
+        showAlgorithm={showAlgorithm}
+        showAlgorithm1={showAlgorithm1}
         liveSteps={graphSteps}
       />
     </div>
