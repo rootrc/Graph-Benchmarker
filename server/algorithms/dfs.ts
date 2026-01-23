@@ -17,29 +17,28 @@ export async function dfs(
   let nodesVisited = 1;
   let edgesVisited = 0;
   let maxStackSize = 1;
-  let stackSizeSum = 1;
+  let stackSizeSum = 0;
 
   while (stack.length > 0) {
     const u = stack.pop()!;
-    if (maxStackSize < stack.length) {
-      maxStackSize = stack.length;
-      onStep({type: "dfs-maxStackSize", metricValue: maxStackSize});
-    }
     for (const v of adjList[u]) {
       edgesVisited++;
-      onStep({type: "dfs-edgesVisited", metricValue: edgesVisited});
+      onStep({ type: "dfs-edgesVisited", metricValue: edgesVisited });
       if (!visited[v]) {
         visited[v] = true;
         stack.push(v);
-        console.log(stack.length);
         nodesVisited++;
-        onStep({type: "dfs-nodesVisited", metricValue: nodesVisited});
+        onStep({ type: "dfs-nodesVisited", metricValue: nodesVisited });
         onStep({ type: "edge", source: u.toString(), target: v.toString() });
         stackSizeSum += stack.length;
-        onStep({type: "dfs-averageStackSize", metricValue: Math.round(stackSizeSum / nodesVisited * 100) / 100});
+        onStep({ type: "dfs-averageStackSize", metricValue: Math.round(stackSizeSum / nodesVisited * 100) / 100 });
+        if (maxStackSize < stack.length) {
+          maxStackSize = stack.length;
+          onStep({ type: "dfs-maxStackSize", metricValue: maxStackSize });
+        }
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
   }
-  onStep({type: "done"});
+  onStep({ type: "done" });
 }

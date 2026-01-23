@@ -21,24 +21,24 @@ export async function bfs(
 
   while (queue.length > 0) {
     const u = queue.shift()!;
-    if (maxQueueSize < queue.length) {
-      maxQueueSize = queue.length;
-      onStep({type: "bfs-maxQueueSize", metricValue: maxQueueSize});
-    }
     for (const v of adjList[u]) {
       edgesVisited++;
-      onStep({type: "bfs-edgesVisited", metricValue: edgesVisited});
+      onStep({ type: "bfs-edgesVisited", metricValue: edgesVisited });
       if (!visited[v]) {
         visited[v] = true;
         queue.push(v);
         nodesVisited++;
-        onStep({type: "bfs-nodesVisited", metricValue: nodesVisited});
+        onStep({ type: "bfs-nodesVisited", metricValue: nodesVisited });
         onStep({ type: "edge", source: u.toString(), target: v.toString() });
         queueSizeSum += queue.length;
-        onStep({type: "bfs-averageQueueSize", metricValue: Math.round(queueSizeSum / nodesVisited * 100) / 100});
+        onStep({ type: "bfs-averageQueueSize", metricValue: Math.round(queueSizeSum / nodesVisited * 100) / 100 });
+        if (maxQueueSize < queue.length) {
+          maxQueueSize = queue.length;
+          onStep({ type: "bfs-maxQueueSize", metricValue: maxQueueSize });
+        }
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
   }
-  onStep({type: "done"});
+  onStep({ type: "done" });
 }
