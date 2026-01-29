@@ -30,9 +30,9 @@ export default function Graph({ elements, graphRef }: { elements: ElementDefinit
         { selector: 'node.highlighted1', style: { 'background-color': '#EF4444' } },
         { selector: 'node.highlighted0.highlighted1', style: { 'background-color': '#8B5CF6' } },
 
-        { selector: 'edge', style: { 'width': 'mapData(scaledWeight, 0, 5, 0, 6)', 'opacity': 0.4, 'curve-style': 'bezier', 'line-color': '#aaa' } },
-        { selector: 'edge.highlighted0', style: { 'width': 'mapData(scaledWeight, 0, 5, 1, 7)', 'opacity': 0.6, 'line-color': '#3B82F6' } },
-        { selector: 'edge.highlighted1', style: { 'width': 'mapData(scaledWeight, 0, 5, 1, 7)', 'opacity': 0.6, 'line-color': '#EF4444' } },
+        { selector: 'edge', style: { 'width': 'mapData(scaledWeight, 0, 8, 0, 7)', 'opacity': 0.4, 'curve-style': 'bezier', 'line-color': '#aaa' } },
+        { selector: 'edge.highlighted0', style: { 'width': 'mapData(scaledWeight, 0, 8, 1, 8)', 'opacity': 0.6, 'line-color': '#3B82F6' } },
+        { selector: 'edge.highlighted1', style: { 'width': 'mapData(scaledWeight, 0, 8, 1, 8)', 'opacity': 0.6, 'line-color': '#EF4444' } },
         { selector: 'edge.highlighted0.highlighted1', style: { 'line-color': '#8B5CF6' } },
       ]}
       style={{ width: '528px', height: '528px' }}

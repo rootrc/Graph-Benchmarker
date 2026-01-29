@@ -11,8 +11,8 @@ const algorithms = [
       space: "O(V)",
     },
     metricDisplay: [
-      { type: "dfs-nodesVisited", display: "Visited Nodes" },
-      { type: "dfs-edgesVisited", display: "Visited Edges" },
+      { type: "dfs-nodesVisited", display: "Node Visits" },
+      { type: "dfs-edgesVisited", display: "Edge Visited" },
       { type: "dfs-maxStackSize", display: "Max Stack Size" },
       { type: "dfs-averageStackSize", display: "Average Stack Size" },
     ],
@@ -26,8 +26,8 @@ const algorithms = [
       space: "O(V)",
     },
     metricDisplay: [
-      { type: "bfs-nodesVisited", display: "Visited Nodes" },
-      { type: "bfs-edgesVisited", display: "Visited Edges" },
+      { type: "bfs-nodesVisited", display: "Node Visits" },
+      { type: "bfs-edgesVisited", display: "Edge Visited" },
       { type: "bfs-maxQueueSize", display: "Max Queue Size" },
       { type: "bfs-averageQueueSize", display: "Average Queue Size" },
     ],
@@ -37,7 +37,7 @@ const algorithms = [
 export default function Traversal() {
   return (
     <HeaderLayout>
-      <AlgorithmPageLayout id = {0} algorithmName="dfs" algorithmName1 = "bfs" algorithmDisplayBox={algorithms} />
+      <AlgorithmPageLayout id = {0} type="unweighted" algorithmName="dfs" algorithmName1 = "bfs" algorithmDisplayBox={algorithms} />
     </HeaderLayout>
   );
 }

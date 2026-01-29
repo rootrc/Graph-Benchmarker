@@ -10,6 +10,7 @@ void generate(string fileName, int N, int M) {
     random_device rd;  
     mt19937 gen(rd()); 
     std::uniform_int_distribution<> dist(1, N);
+    std::uniform_int_distribution<> dist2(1, 64);
     fileName = "C:\\Users\\Admin\\Downloads\\Graph-Benchmarker\\server\\data\\" + fileName;
     ofstream file(fileName);
     if (!file.is_open()) {
@@ -17,7 +18,7 @@ void generate(string fileName, int N, int M) {
         return;
     }
     file << "[\n";
-    file << "  { \"data\": { \"id\": \"1\" }, \"classes\": \"start-node\" },";
+    file << "  { \"data\": { \"id\": \"1\" }, \"classes\": \"start-node\" },\n";
     for (int i = 2; i <= N; i++) {
         file << "  { \"data\": { \"id\": \""<< i << "\" } }," << "\n";
     }
@@ -34,9 +35,9 @@ void generate(string fileName, int N, int M) {
     
         s.insert(10000 * a + b);
         if (i < M) {
-            file << "  { \"data\": { \"id\": \"" << a << "-" << b << "\", \"source\": \"" << a << "\", \"target\": \"" << b << "\" } },\n";
+            file << "  { \"data\": { \"id\": \"" << a << "-" << b << "\", \"source\": \"" << a << "\", \"target\": \""<< b << "\", \"weight\": \"" << dist2(gen) << "\" } },\n";
         } else {
-            file << "  { \"data\": { \"id\": \"" << a << "-" << b << "\", \"source\": \"" << a << "\", \"target\": \"" << b << "\" } }\n";
+            file << "  { \"data\": { \"id\": \"" << a << "-" << b << "\", \"source\": \"" << a << "\", \"target\": \""<< b << "\", \"weight\": \"" << dist2(gen) << "\" } },\n\n";
         }
     }
     for (int i = N + 1; i <= M; i++) {
@@ -46,9 +47,9 @@ void generate(string fileName, int N, int M) {
         } while (a == b || s.find(10000 * a + b) != s.end() || s.find(10000 * b + a) != s.end());
         s.insert(10000 * a + b);
         if (i < M) {
-            file << "  { \"data\": { \"id\": \"" << a << "-" << b << "\", \"source\": \"" << a << "\", \"target\": \"" << b << "\" } },\n";
+            file << "  { \"data\": { \"id\": \"" << a << "-" << b << "\", \"source\": \"" << a << "\", \"target\": \""<< b << "\", \"weight\": \"" << dist2(gen) << "\" } },\n";
         } else {
-            file << "  { \"data\": { \"id\": \"" << a << "-" << b << "\", \"source\": \"" << a << "\", \"target\": \"" << b << "\" } }\n";
+            file << "  { \"data\": { \"id\": \"" << a << "-" << b << "\", \"source\": \"" << a << "\", \"target\": \""<< b << "\", \"weight\": \"" << dist2(gen) << "\" } }\n";
         }
     }
     file << "]";
@@ -58,5 +59,5 @@ void generate(string fileName, int N, int M) {
 }
 
 int main() {
-    generate("test1.json", 200, 240);
+    generate("test1.json", 200, 280);
 }

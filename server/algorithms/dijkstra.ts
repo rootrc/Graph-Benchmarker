@@ -13,8 +13,8 @@ export async function dijkstra(
   const dist: number[] = Array(nodes.length + 1).fill(1e18);
   dist[1] = 0;
   const pq = new PriorityQueue<[number, number]>(
-  undefined,
-    (a:[number, number], b:[number, number]) => a[0] - b[0]
+    undefined,
+    (a: [number, number], b: [number, number]) => a[0] - b[0]
   );
   pq.add([0, 1]);
 
@@ -26,24 +26,24 @@ export async function dijkstra(
   while (pq.size() > 0) {
     const [d, u] = pq.poll()!;
     if (d > dist[u]) continue;
-    if (maxQueueSize < pq.size()) {
-      maxQueueSize = pq.size();
-      onStep({type: "dijkstra-maxQueueSize", metricValue: maxQueueSize});
-    }
     for (const [v, w] of adjList[u]) {
       edgesVisited++;
-      onStep({type: "dijkstra-edgesVisited", metricValue: edgesVisited});
-      if (dist[v] > dist[u] + w) {
-        dist[v] = dist[u] + w
+      onStep({ type: "dijkstra-edgesVisited", metricValue: edgesVisited });
+      if (dist[v] > dist[u] + Number(w)) {
+        dist[v] = dist[u] + Number(w)
         pq.add([dist[v], v]);
         nodesVisited++;
-        onStep({type: "dijkstra-nodesVisited", metricValue: nodesVisited});
+        onStep({ type: "dijkstra-nodesVisited", metricValue: nodesVisited });
         onStep({ type: "edge", source: u.toString(), target: v.toString() });
         queueSizeSum += pq.size();
-        onStep({type: "dijkstra-averageQueueSize", metricValue: Math.round(queueSizeSum / nodesVisited * 100) / 100});
+        onStep({ type: "dijkstra-averageQueueSize", metricValue: Math.round(queueSizeSum / nodesVisited * 100) / 100 });
+        if (maxQueueSize < pq.size()) {
+          maxQueueSize = pq.size();
+          onStep({ type: "dijkstra-maxQueueSize", metricValue: maxQueueSize });
+        }
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
   }
-  onStep({type: "done"});
+  onStep({ type: "done" });
 }

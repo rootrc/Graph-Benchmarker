@@ -11,8 +11,8 @@ const algorithms = [
       space: "O(E + V)",
     },
     metricDisplay: [
-      { type: "dijkstra-nodesVisited", display: "Visited Nodes" },
-      { type: "dijkstra-edgesVisited", display: "Visited Edges" },
+      { type: "dijkstra-nodesVisited", display: "Node Visits" },
+      { type: "dijkstra-edgesVisited", display: "Edge Visits" },
       { type: "dijkstra-maxQueueSize", display: "Max Queue Size" },
       { type: "dijkstra-averageQueueSize", display: "Average Queue Size" },
     ],
@@ -22,7 +22,7 @@ const algorithms = [
 export default function WeightedTraversal() {
   return (
     <HeaderLayout>
-      <AlgorithmPageLayout id = {1} algorithmName="dijkstra" algorithmDisplayBox={algorithms} />
+      <AlgorithmPageLayout id = {1} type="weighted" algorithmName="dijkstra" algorithmDisplayBox={algorithms} />
     </HeaderLayout>
   )
 }
