@@ -7,12 +7,10 @@ import UnweightedSSSP from "./pages/WeightedTraversal";
 export default function App() {
 
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/algorithms/traversal" element={<Traversal />} />
-        <Route path="/algorithms/weighted-traversal" element={<UnweightedSSSP />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/algorithms/traversal" element={<Traversal />} />
+      <Route path="/algorithms/weighted-traversal" element={<UnweightedSSSP />} />
+    </Routes>
   )
 }
