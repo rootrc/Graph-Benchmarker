@@ -10,21 +10,22 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmName1, alg
   const [runAlgorithm, setRunAlgorithm] = useState(false);
   const [showAlgorithm, setShowAlgorithm] = useState(true);
   const [showAlgorithm1, setShowAlgorithm1] = useState(true);
+  const [delay, setDelay] = useState(50);
   const setters: boolean[] = [showAlgorithm, showAlgorithm1];
   const setters1: React.Dispatch<React.SetStateAction<boolean>>[] = [setShowAlgorithm, setShowAlgorithm1];
   const [graphSteps, setGraphSteps] = useState<{ id: number; source: string; target: string }[]>([]);
   const [metricSteps, setMetricSteps] = useState<{ type: string; metricValue: number }[]>([]);
-  
+
   useEffect(() => {
     if (!runAlgorithm) return;
-    const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmName}?graphFile=${graphName}`);
+    const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmName}?graphFile=${graphName}&delay=${delay}`);
     eventSource.onmessage = (event) => {
       const { type, source, target, metricValue } = JSON.parse(event.data);
       if (type === "done") {
         eventSource.close();
         return;
       } else if (type === "edge") {
-        setGraphSteps(prev => [...prev, {id: 0, source, target }]);
+        setGraphSteps(prev => [...prev, { id: 0, source, target }]);
       } else {
         setMetricSteps(prev => [...prev, { type, metricValue }]);
       }
@@ -38,14 +39,14 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmName1, alg
   if (algorithmName1) {
     useEffect(() => {
       if (!runAlgorithm) return;
-      const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmName1}?graphFile=${graphName}`);
+      const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmName1}?graphFile=${graphName}&delay=${delay}`);
       eventSource.onmessage = (event) => {
         const { type, source, target, metricValue } = JSON.parse(event.data);
         if (type === "done") {
           eventSource.close();
           return;
         } else if (type === "edge") {
-          setGraphSteps(prev => [...prev, {id: 1, source, target }]);
+          setGraphSteps(prev => [...prev, { id: 1, source, target }]);
         } else {
           setMetricSteps(prev => [...prev, { type, metricValue }]);
         }
@@ -83,6 +84,7 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmName1, alg
         runAlgorithm={runAlgorithm}
         setRunAlgorithm={setRunAlgorithm}
         restart={restart}
+        setDelay={setDelay}
         showAlgorithm={showAlgorithm}
         showAlgorithm1={showAlgorithm1}
         liveSteps={graphSteps}

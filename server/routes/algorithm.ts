@@ -19,14 +19,14 @@ async function runAlgorithm(
     onStep: (step: Step) => void,
     delay: number
   ) => Promise<void>,
-  delay: number = 40
 ) {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
 
   const graphFile = req.query.graphFile as string;
-
+  const delay = Number(req.query.delay);
+  
   let graphData: ElementDefinition[];
   try {
     const filePath = path.join(process.cwd(), "data", graphFile);

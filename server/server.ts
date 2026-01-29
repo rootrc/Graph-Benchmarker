@@ -14,10 +14,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get("/", (req: Request, res: Response) => {
-    res.json({ fruits: ['apple', 'banana', 'cherry'] });
-});
-
 app.get('/health', (req: Request, res: Response) => {
   res.json({ status: 'ok' });
 });

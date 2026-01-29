@@ -2,13 +2,15 @@ import Graph from "../components/Graph";
 import useFileFetcher from "../hooks/useFileFetcher";
 import type { ElementDefinition, Core } from 'cytoscape';
 import { useEffect, useRef } from "react";
+import Slider from "./Slider";
 
 export default function GraphLayout({
-  graphName, runAlgorithm, setRunAlgorithm, restart, showAlgorithm, showAlgorithm1, liveSteps }: {
+  graphName, runAlgorithm, setRunAlgorithm, restart, setDelay, showAlgorithm, showAlgorithm1, liveSteps }: {
     graphName: string;
     runAlgorithm: boolean;
     setRunAlgorithm: React.Dispatch<React.SetStateAction<boolean>>;
     restart: () => void;
+    setDelay: React.Dispatch<React.SetStateAction<number>>;
     showAlgorithm: boolean;
     showAlgorithm1: boolean;
     liveSteps: {
@@ -93,11 +95,11 @@ export default function GraphLayout({
     <div className="ml-auto flex items-center justify-center">
       <div className="w-132 h-132 border rounded-lg">
         {graphDisplay}
-        <div className="mt-5 flex gap-3">
+        <div className="mt-2 flex gap-3">
           <button
             onClick={() => setRunAlgorithm(true)}
             disabled={runAlgorithm || !data}
-            className={`px-6 py-3 font-semibold rounded bg-green-600 text-white hover:bg-green-500 transition-opacity duration-300 ease-in-out ${runAlgorithm || !data ? 'opacity-50 cursor-not-allowed hover:bg-green-600' : 'opacity-100 cursor-pointer'}`}
+            className={`w-30 px-6 py-3 font-semibold rounded bg-green-600 text-white hover:bg-green-500 transition-opacity duration-300 ease-in-out ${runAlgorithm || !data ? 'opacity-50 cursor-not-allowed hover:bg-green-600' : 'opacity-100 cursor-pointer'}`}
           >
             Start
           </button>
@@ -105,10 +107,16 @@ export default function GraphLayout({
           <button
             onClick={restart}
             disabled={!data || !runAlgorithm}
-            className={`px-6 py-3 font-semibold rounded bg-blue-600 text-white hover:bg-blue-500 transition-opacity duration-300 ease-in-out ${!data || !runAlgorithm ? 'opacity-50 cursor-not-allowed hover:bg-blue-600' : 'opacity-100 cursor-pointer'}`}
+            className={`w-30 px-6 py-3 font-semibold rounded bg-blue-600 text-white hover:bg-blue-500 transition-opacity duration-300 ease-in-out ${!data || !runAlgorithm ? 'opacity-50 cursor-not-allowed hover:bg-blue-600' : 'opacity-100 cursor-pointer'}`}
           >
             Restart
           </button>
+          <Slider
+            onChange={setDelay}
+            min={0}
+            max={100}
+            disabled={runAlgorithm}
+          />
         </div>
       </div>
     </div>
