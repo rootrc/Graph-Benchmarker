@@ -37,7 +37,7 @@ const algorithms = [
 export default function Traversal() {
   return (
     <HeaderLayout>
-      <AlgorithmPageLayout algorithmName="dfs" algorithmName1 = "bfs" algorithmDisplayBox={algorithms} />
+      <AlgorithmPageLayout id = {0} algorithmName="dfs" algorithmName1 = "bfs" algorithmDisplayBox={algorithms} />
     </HeaderLayout>
   );
 }

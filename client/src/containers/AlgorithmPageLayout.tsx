@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 import AlgorithmDisplayBox from '../components/AlgorithmDisplayBox';
 import GraphLayout from './GraphLayout';
 import type { Algorithm } from '../components/AlgorithmDisplayBox';
+import { useLocalStorage } from '@uidotdev/usehooks';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function AlgorithmPageLayout({ algorithmName, algorithmName1, algorithmDisplayBox }: { algorithmName: string; algorithmName1?: string; algorithmDisplayBox: Algorithm[] }) {
+export default function AlgorithmPageLayout({id, algorithmName, algorithmName1, algorithmDisplayBox }: {id: number, algorithmName: string; algorithmName1?: string; algorithmDisplayBox: Algorithm[] }) {
   const graphName = "testw.json";
   const [runAlgorithm, setRunAlgorithm] = useState(false);
-  const [showAlgorithm, setShowAlgorithm] = useState(true);
-  const [showAlgorithm1, setShowAlgorithm1] = useState(true);
+  const [showAlgorithm, setShowAlgorithm] = useLocalStorage(`show-algorithm-${id}`, true);
+  const [showAlgorithm1, setShowAlgorithm1] = useLocalStorage(`show-algorithm1-${id}`, true);
   const [delay, setDelay] = useState(50);
   const setters: boolean[] = [showAlgorithm, showAlgorithm1];
   const setters1: React.Dispatch<React.SetStateAction<boolean>>[] = [setShowAlgorithm, setShowAlgorithm1];
@@ -80,6 +81,7 @@ export default function AlgorithmPageLayout({ algorithmName, algorithmName1, alg
         ))}
       </div>
       <GraphLayout
+        id={id}
         graphName={graphName}
         runAlgorithm={runAlgorithm}
         setRunAlgorithm={setRunAlgorithm}

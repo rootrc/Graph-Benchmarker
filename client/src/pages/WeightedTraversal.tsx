@@ -22,7 +22,7 @@ const algorithms = [
 export default function WeightedTraversal() {
   return (
     <HeaderLayout>
-      <AlgorithmPageLayout algorithmName="dijkstra" algorithmDisplayBox={algorithms} />
+      <AlgorithmPageLayout id = {1} algorithmName="dijkstra" algorithmDisplayBox={algorithms} />
     </HeaderLayout>
   )
 }

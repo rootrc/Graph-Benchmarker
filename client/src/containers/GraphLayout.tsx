@@ -5,7 +5,8 @@ import { useEffect, useRef } from "react";
 import Slider from "./Slider";
 
 export default function GraphLayout({
-  graphName, runAlgorithm, setRunAlgorithm, restart, setDelay, showAlgorithm, showAlgorithm1, liveSteps }: {
+  id, graphName, runAlgorithm, setRunAlgorithm, restart, setDelay, showAlgorithm, showAlgorithm1, liveSteps }: {
+    id: number;
     graphName: string;
     runAlgorithm: boolean;
     setRunAlgorithm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -112,6 +113,7 @@ export default function GraphLayout({
             Restart
           </button>
           <Slider
+            id={id}
             onChange={setDelay}
             min={0}
             max={100}

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
-export default function Slider({ onChange, min = 0, max = 100, disabled = false }: {
+export default function Slider({id, onChange, min = 0, max = 100, disabled = false }: {
+  id: number;
   onChange: React.Dispatch<React.SetStateAction<number>>;
   min?: number;
   max?: number;
   disabled?: boolean;
 }) {
-  const [value, setValue] = useState((min + max) / 2);
+  const [value, setValue] = useLocalStorage(`section-slider${id}`, (min + max) / 2);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = Number(e.target.value);
