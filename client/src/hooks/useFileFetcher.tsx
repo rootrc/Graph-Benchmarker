@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -12,12 +13,8 @@ export default function useFileFetcher<T = unknown>(filename: string) {
 
     async function fetchFile() {
       try {
-        const res = await fetch(`${API_URL}/graph/${filename}`);
-        if (!res.ok) {
-          throw new Error(`Failed to fetch ${filename}`);
-        }
-        const json = (await res.json()) as T;
-        if (!cancelled) setData(json);
+        const res = await axios.get(`${API_URL}/graph/${filename}`);
+        if (!cancelled) setData(res.data.elements);
       } catch (err) {
         if (!cancelled) setError((err as Error).message);
       } finally {

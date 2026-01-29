@@ -30,7 +30,7 @@ async function runAlgorithm(
   try {
     const filePath = path.join(process.cwd(), "data", graphFile);
     const fileContent = await fs.readFile(filePath, 'utf-8');
-    graphData = JSON.parse(fileContent);
+    graphData = JSON.parse(fileContent).elements;
   } catch (error) {
     res.write(`Could not load graph file: ${graphFile}\n\n`);
     res.end();
