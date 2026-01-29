@@ -10,7 +10,6 @@ export async function dijkstra(
   delay: number
 ) {
   const adjList = await getWeightedAdjacencyList(nodes, edges);
-  console.log(adjList);
   const dist: number[] = Array(nodes.length + 1).fill(1e18);
   dist[1] = 0;
   const pq = new PriorityQueue<[number, number]>(
