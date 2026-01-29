@@ -6,7 +6,7 @@ import type { Algorithm } from '../components/AlgorithmDisplayBox';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function AlgorithmPageLayout({ algorithmName, algorithmName1, algorithmDisplayBox }: { algorithmName: string; algorithmName1?: string; algorithmDisplayBox: Algorithm[] }) {
-  const graphName = "test.json";
+  const graphName = "testw.json";
   const [runAlgorithm, setRunAlgorithm] = useState(false);
   const [showAlgorithm, setShowAlgorithm] = useState(true);
   const [showAlgorithm1, setShowAlgorithm1] = useState(true);

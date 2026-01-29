@@ -6,8 +6,8 @@ const menuSections = [
   {
     title: "Simple Algorithms",
     links: [
-      { name: "Traversal", to: "/traversal" },
-      { name: "Unweighted SSSP", to: "/unweighted-sssp" },
+      { name: "Traversal", to: "/algorithms/traversal" },
+      { name: "Weighted Traversal", to: "/algorithms/weighted-traversal" },
     ],
   },
 ];

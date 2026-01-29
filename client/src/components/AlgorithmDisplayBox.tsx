@@ -32,7 +32,8 @@ export default function AlgorithmDisplayBox({
     if (c.includes("2") || c.includes("!") || c.includes("³")) {
       return "text-red-500";
     }
-    if (c.includes("²") || c.includes("Vlog(E)") || c.includes("Vlog(V)") || c.includes("Elog(E)") || c.includes("Elog(V)")) {
+    if (c.includes("²") || c.includes("V logE") || c.includes("V logV") || c.includes("E logE") || c.includes("E logV")
+      || c.includes("V) logE") || c.includes("V) logV") || c.includes("E) logE") || c.includes("E) logV")) {
       return "text-orange-500";
     }
     return "text-green-500";

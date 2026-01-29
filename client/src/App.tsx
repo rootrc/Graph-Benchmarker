@@ -1,7 +1,7 @@
 import { Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import Traversal from "./pages/Traversal";
-import UnweightedSSSP from "./pages/UnweightedSSSP";
+import UnweightedSSSP from "./pages/WeightedTraversal";
 
 
 export default function App() {
@@ -10,8 +10,8 @@ export default function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/traversal" element={<Traversal />} />
-        <Route path="/unweighted-sssp" element={<UnweightedSSSP />} />
+        <Route path="/algorithms/traversal" element={<Traversal />} />
+        <Route path="/algorithms/weighted-traversal" element={<UnweightedSSSP />} />
       </Routes>
     </>
   )
