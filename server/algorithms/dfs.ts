@@ -17,21 +17,25 @@ export async function dfs(
   let nodesVisited = 1;
   let edgesVisited = 0;
   let maxStackSize = 1;
-  let stackSizeSum = 0;
+  let stackSizeSum = 1;
+  let queueAverageCnt = 1;
 
   while (stack.length > 0) {
     const u = stack.pop()!;
+    stackSizeSum += stack.length;
+    ++queueAverageCnt;
     for (const v of adjList[u]) {
-      edgesVisited++;
-      onStep({ type: "dfs-edgesVisited", metricValue: edgesVisited });
+      ++edgesVisited;
       if (!visited[v]) {
         visited[v] = true;
         stack.push(v);
-        nodesVisited++;
+        onStep({ type: "dfs-edgesVisited", metricValue: edgesVisited });
+        ++nodesVisited;
         onStep({ type: "dfs-nodesVisited", metricValue: nodesVisited });
         onStep({ type: "edge", source: u.toString(), target: v.toString() });
         stackSizeSum += stack.length;
-        onStep({ type: "dfs-averageStackSize", metricValue: Math.round(stackSizeSum / nodesVisited * 100) / 100 });
+        ++queueAverageCnt;
+        onStep({ type: "dfs-averageStackSize", metricValue: Math.round(stackSizeSum / queueAverageCnt * 100) / 100 });
         if (maxStackSize < stack.length) {
           maxStackSize = stack.length;
           onStep({ type: "dfs-maxStackSize", metricValue: maxStackSize });

@@ -18,20 +18,24 @@ export async function bfs(
   let edgesVisited = 0;
   let maxQueueSize = 1;
   let queueSizeSum = 1;
+  let queueAverageCnt = 1;
 
   while (queue.length > 0) {
     const u = queue.shift()!;
+    queueSizeSum += queue.length;
+    ++queueAverageCnt;
     for (const v of adjList[u]) {
-      edgesVisited++;
-      onStep({ type: "bfs-edgesVisited", metricValue: edgesVisited });
+      ++edgesVisited;
       if (!visited[v]) {
         visited[v] = true;
         queue.push(v);
-        nodesVisited++;
+        onStep({ type: "bfs-edgesVisited", metricValue: edgesVisited });
+        ++nodesVisited;
         onStep({ type: "bfs-nodesVisited", metricValue: nodesVisited });
         onStep({ type: "edge", source: u.toString(), target: v.toString() });
         queueSizeSum += queue.length;
-        onStep({ type: "bfs-averageQueueSize", metricValue: Math.round(queueSizeSum / nodesVisited * 100) / 100 });
+        ++queueAverageCnt;
+        onStep({ type: "bfs-averageQueueSize", metricValue: Math.round(queueSizeSum / queueAverageCnt * 100) / 100 });
         if (maxQueueSize < queue.length) {
           maxQueueSize = queue.length;
           onStep({ type: "bfs-maxQueueSize", metricValue: maxQueueSize });

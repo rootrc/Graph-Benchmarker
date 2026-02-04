@@ -22,21 +22,25 @@ export async function dijkstra(
   let edgesVisited = 0;
   let maxQueueSize = 1;
   let queueSizeSum = 1;
+  let queueAverageCnt = 1;
 
   while (pq.size() > 0) {
     const [d, u] = pq.poll()!;
+    queueSizeSum += pq.size();
+    ++queueAverageCnt;
     if (d > dist[u]) continue;
     for (const [v, w] of adjList[u]) {
       edgesVisited++;
-      onStep({ type: "dijkstra-edgesVisited", metricValue: edgesVisited });
       if (dist[v] > dist[u] + Number(w)) {
         dist[v] = dist[u] + Number(w)
         pq.add([dist[v], v]);
+        onStep({ type: "dijkstra-edgesVisited", metricValue: edgesVisited });
         nodesVisited++;
         onStep({ type: "dijkstra-nodesVisited", metricValue: nodesVisited });
         onStep({ type: "edge", source: u.toString(), target: v.toString() });
         queueSizeSum += pq.size();
-        onStep({ type: "dijkstra-averageQueueSize", metricValue: Math.round(queueSizeSum / nodesVisited * 100) / 100 });
+        ++queueAverageCnt;
+        onStep({ type: "dijkstra-averageQueueSize", metricValue: Math.round(queueSizeSum / queueAverageCnt * 100) / 100 });
         if (maxQueueSize < pq.size()) {
           maxQueueSize = pq.size();
           onStep({ type: "dijkstra-maxQueueSize", metricValue: maxQueueSize });
