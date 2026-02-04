@@ -5,7 +5,7 @@ import fcose from 'cytoscape-fcose';
 
 cytoscape.use(fcose);
 
-export default function Graph({ elements, graphRef }: { elements: ElementDefinition[]; graphRef?: React.RefObject<Core | null>; }) {
+export default function Graph({ elements, showStartNode, graphRef }: { elements: ElementDefinition[]; showStartNode: boolean, graphRef?: React.RefObject<Core | null>; }) {
   return (
     <CytoscapeComponent
       elements={elements}
@@ -25,7 +25,9 @@ export default function Graph({ elements, graphRef }: { elements: ElementDefinit
       } as any}
       stylesheet={[
         { selector: 'node', style: { 'background-color': '#aaa', color: '#fff', width: '16px', height: '16px' } },
-        { selector: 'node.start-node', style: { width: '20px', height: '20px', 'background-color': '#008000' } },
+        ...(showStartNode
+          ? [{ selector: 'node.start-node', style: { width: '20px', height: '20px', 'background-color': '#008000' } }]
+          : []),
         { selector: 'node.highlighted0', style: { 'background-color': '#3B82F6' } },
         { selector: 'node.highlighted1', style: { 'background-color': '#EF4444' } },
         { selector: 'node.highlighted0.highlighted1', style: { 'background-color': '#8B5CF6' } },

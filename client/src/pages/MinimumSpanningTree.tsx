@@ -1,8 +1,10 @@
+import type { AlgorithmConfig } from "../components/AlgorithmDisplayBox";
 import AlgorithmPageLayout from "../containers/AlgorithmPageLayout";
 import HeaderLayout from "../containers/HeaderLayout";
 
-const algorithms = [
-  {
+const algorithmConfig : AlgorithmConfig = {
+  showStartNode: false,
+  algorithms: [{
     title: "Kruskal's",
     algorithmName: "kruskal",
     description: "Kruskal's Algorithm",
@@ -17,13 +19,13 @@ const algorithms = [
       { type: "kruskal-DSUFindCnt", display: "DSU Find Operations" },
       { type: "kruskal-DSUUnionCnt", display: "DSU Union Operations" },
     ],
-  }
-];
+  }]
+};
 
 export default function WeightedTraversal() {
   return (
     <HeaderLayout>
-      <AlgorithmPageLayout id = {2} type="weighted" algorithmDisplayBox={algorithms} />
+      <AlgorithmPageLayout id = {2} type="weighted" algorithmConfig={algorithmConfig} />
     </HeaderLayout>
   )
 }

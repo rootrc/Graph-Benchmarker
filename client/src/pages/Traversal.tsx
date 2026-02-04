@@ -1,8 +1,10 @@
+import type { AlgorithmConfig } from "../components/AlgorithmDisplayBox";
 import AlgorithmPageLayout from "../containers/AlgorithmPageLayout";
 import HeaderLayout from "../containers/HeaderLayout";
 
-const algorithms = [
-  {
+const algorithmConfig : AlgorithmConfig = {
+  showStartNode: true,
+  algorithms: [{
     title: "DFS",
     algorithmName: "dfs",
     description: "Depth First Search",
@@ -31,13 +33,13 @@ const algorithms = [
       { type: "bfs-maxQueueSize", display: "Max Queue Size" },
       { type: "bfs-averageQueueSize", display: "Average Queue Size" },
     ],
-  },
-];
+  }]
+};
 
 export default function Traversal() {
   return (
     <HeaderLayout>
-      <AlgorithmPageLayout id = {0} type="unweighted" algorithmDisplayBox={algorithms} />
+      <AlgorithmPageLayout id={0} type="unweighted" algorithmConfig={algorithmConfig} />
     </HeaderLayout>
   );
 }

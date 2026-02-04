@@ -1,8 +1,10 @@
+import type { AlgorithmConfig } from "../components/AlgorithmDisplayBox";
 import AlgorithmPageLayout from "../containers/AlgorithmPageLayout";
 import HeaderLayout from "../containers/HeaderLayout";
 
-const algorithms = [
-  {
+const algorithmConfig : AlgorithmConfig = {
+  showStartNode: true,
+  algorithms: [{
     title: "Dijkstra",
     algorithmName: "dijkstra",
     description: "Dijkstra's algorithm",
@@ -16,13 +18,13 @@ const algorithms = [
       { type: "dijkstra-maxQueueSize", display: "Max Queue Size" },
       { type: "dijkstra-averageQueueSize", display: "Average Queue Size" },
     ],
-  }
-];
+  }]
+};
 
 export default function WeightedTraversal() {
   return (
     <HeaderLayout>
-      <AlgorithmPageLayout id = {1} type="weighted" algorithmDisplayBox={algorithms} />
+      <AlgorithmPageLayout id={1} type="weighted" algorithmConfig={algorithmConfig} />
     </HeaderLayout>
   )
 }

@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
+export type AlgorithmConfig = {
+  showStartNode: boolean;
+  algorithms: Algorithm[];
+}
+
 export type Algorithm = {
   title: string;
   algorithmName: string;

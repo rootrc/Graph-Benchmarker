@@ -5,9 +5,10 @@ import { useEffect, useRef } from "react";
 import Slider from "./Slider";
 
 export default function GraphLayout({
-  id, graphName, runAlgorithm, setRunAlgorithm, restart, setDelay, showAlgorithm, showAlgorithm1, liveSteps }: {
+  id, graphName, showStartNode, runAlgorithm, setRunAlgorithm, restart, setDelay, showAlgorithm, showAlgorithm1, liveSteps }: {
     id: number;
     graphName: string;
+    showStartNode: boolean;
     runAlgorithm: boolean;
     setRunAlgorithm: React.Dispatch<React.SetStateAction<boolean>>;
     restart: () => void;
@@ -90,7 +91,7 @@ export default function GraphLayout({
   let graphDisplay;
   if (error) graphDisplay = <p className="flex justify-center items-center w-full h-132 text-4xl text-red-500">Failed to load data</p>;
   else if (loading) graphDisplay = <p className="flex justify-center items-center w-full h-132 text-4xl text-gray-500">Loading graph...</p>;
-  else graphDisplay = <Graph elements={transformedData ?? []} graphRef={graphRef} />;
+  else graphDisplay = <Graph elements={transformedData ?? []} showStartNode={showStartNode} graphRef={graphRef} />;
 
   return (
     <div className="ml-auto flex items-center justify-center">

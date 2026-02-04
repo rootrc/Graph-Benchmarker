@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import AlgorithmDisplayBox from '../components/AlgorithmDisplayBox';
 import GraphLayout from './GraphLayout';
-import type { Algorithm } from '../components/AlgorithmDisplayBox';
+import type { AlgorithmConfig } from '../components/AlgorithmDisplayBox';
 import { useLocalStorage } from '@uidotdev/usehooks';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function AlgorithmPageLayout({ id, type, algorithmDisplayBox }: { id: number, type: string; algorithmDisplayBox: Algorithm[] }) {
+export default function AlgorithmPageLayout({ id, type, algorithmConfig: algorithmConfig }: { id: number, type: string; algorithmConfig: AlgorithmConfig }) {
   let graphName = "";
   if (type === "unweighted") {
     graphName = "test.json";
@@ -26,7 +26,7 @@ export default function AlgorithmPageLayout({ id, type, algorithmDisplayBox }: {
 
   useEffect(() => {
     if (!runAlgorithm) return;
-    const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmDisplayBox[0].algorithmName}?graphFile=${graphName}&delay=${delay}`);
+    const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmConfig.algorithms[0].algorithmName}?graphFile=${graphName}&delay=${delay}`);
     eventSource.onmessage = (event) => {
       const { type, source, target, metricValue } = JSON.parse(event.data);
       if (type === "done") {
@@ -44,10 +44,10 @@ export default function AlgorithmPageLayout({ id, type, algorithmDisplayBox }: {
     };
 
   }, [runAlgorithm, graphName]);
-  if (algorithmDisplayBox[1]) {
+  if (algorithmConfig.algorithms[1]) {
     useEffect(() => {
       if (!runAlgorithm) return;
-      const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmDisplayBox[1].algorithmName}?graphFile=${graphName}&delay=${delay}`);
+      const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmConfig.algorithms[1].algorithmName}?graphFile=${graphName}&delay=${delay}`);
       eventSource.onmessage = (event) => {
         const { type, source, target, metricValue } = JSON.parse(event.data);
         if (type === "done") {
@@ -66,7 +66,7 @@ export default function AlgorithmPageLayout({ id, type, algorithmDisplayBox }: {
 
     }, [runAlgorithm, graphName]);
   }
-
+  
   const restart = () => {
     setGraphSteps([]);
     setMetricSteps([]);
@@ -76,7 +76,7 @@ export default function AlgorithmPageLayout({ id, type, algorithmDisplayBox }: {
   return (
     <div className="flex flex-row gap-6 w-full items-start">
       <div className="flex flex-row gap-4 flex-wrap">
-        {algorithmDisplayBox.map((algorithm, index) => (
+        {algorithmConfig.algorithms.map((algorithm, index) => (
           <AlgorithmDisplayBox
             key={index}
             index={index}
@@ -84,21 +84,22 @@ export default function AlgorithmPageLayout({ id, type, algorithmDisplayBox }: {
             showAlgorithm={setters[index]}
             setShowAlgorithm={setters1[index]}
             liveSteps={metricSteps}
-            showHide={algorithmDisplayBox[1] !== undefined}
-          />
-        ))}
+            showHide={algorithmConfig.algorithms[1] !== undefined}
+            />
+          ))}
       </div>
       <GraphLayout
         id={id}
         graphName={graphName}
         runAlgorithm={runAlgorithm}
+        showStartNode={algorithmConfig.showStartNode}
         setRunAlgorithm={setRunAlgorithm}
         restart={restart}
         setDelay={setDelay}
         showAlgorithm={showAlgorithm}
         showAlgorithm1={showAlgorithm1}
         liveSteps={graphSteps}
-      />
+        />
     </div>
   );
 }
