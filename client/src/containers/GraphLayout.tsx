@@ -41,6 +41,8 @@ export default function GraphLayout({
     if (liveSteps.length == 0) {
       graph.elements().removeClass('highlighted0');
       graph.elements().removeClass('highlighted1');
+      graph.elements().removeClass('highlighted0Removed');
+      graph.elements().removeClass('highlighted1Removed');
       prevStepsLength.current = 0;
       return;
     }

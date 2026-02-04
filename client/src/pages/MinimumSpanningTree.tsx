@@ -13,11 +13,12 @@ const algorithmConfig: AlgorithmConfig = {
       space: "O(V + E)",
     },
     metricDisplay: [
+      { type: "kruskal-spanningTreeSize", display: "Spanning Tree Size"},
       { type: "kruskal-edgesExamined", display: "Edges Examined" },
       { type: "kruskal-edgesAccepted", display: "Edges Accepted" },
       { type: "kruskal-edgesRejected", display: "Edges Rejected" },
       { type: "kruskal-DSUFindCnt", display: "DSU Find Operations" },
-      { type: "kruskal-DSUUnionCnt", display: "DSU Union Operations" },
+      { type: "kruskal-DSUUnionCnt", display: "DSU Union Operations" }
     ],
   },
   {
@@ -29,11 +30,12 @@ const algorithmConfig: AlgorithmConfig = {
       space: "O(V + E)",
     },
     metricDisplay: [
+      { type: "prim-spanningTreeSize", display: "Spanning Tree Size"},
       { type: "prim-edgesExamined", display: "Edges Examined" },
       { type: "prim-edgesAccepted", display: "Edges Accepted" },
       { type: "prim-edgesRejected", display: "Edges Rejected" },
-      { type: "prim-maxQueueSize", display: "Max Queue Size" },
-      { type: "prim-averageQueueSize", display: "Average Queue Size" },
+      { type: "prim-maxQueueSize", display: "Max Priority Queue Size" },
+      { type: "prim-averageQueueSize", display: "Average Priority Queue Size" }
     ],
   }]
 };

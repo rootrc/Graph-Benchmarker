@@ -30,12 +30,12 @@ You can find it [HERE](https://graph-benchmarker.vercel.app/)
   - DFS (Depth-First Search)
   - BFS (Breadth-First Search)
   - Dijkstra's Algorithm
+  - Kruskal's Algorithm
+  - Prim's Algorithm
  
 - **Planned Algorithms:**
   - A* search algorithm
   - Bellman-Ford Algorithm
-  - Kruskal's Algorithm
-  - Prim's Algorithm
   - Toposort
   - Khan's Algorithm
   - Diameter of a Tree

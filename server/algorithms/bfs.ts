@@ -39,7 +39,7 @@ export async function bfs(
           maxQueueSize = queue.length;
           onStep({ type: "bfs-maxQueueSize", metricValue: maxQueueSize });
         }
-        onStep({ type: "edge", source: u.toString(), target: v.toString() });
+        onStep({ type: "edge", source: u, target: v });
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }

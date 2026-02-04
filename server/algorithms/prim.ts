@@ -18,6 +18,7 @@ export async function prim(
   );
   pq.add([0, 1, -1]);
 
+  let size = 0;
   let edgesAccepted = 0;
   let edgesRejected = 0;
   let maxQueueSize = 1;
@@ -34,17 +35,19 @@ export async function prim(
         continue;
       }
       visited[u] = true;
+      size += Number(d);
       ++edgesAccepted;
+      onStep({ type: "prim-spanningTreeSize", metricValue: size});
       onStep({ type: "prim-edgesExamined", metricValue: edgesAccepted + edgesRejected });
       onStep({ type: "prim-edgesAccepted", metricValue: edgesAccepted });
       onStep({ type: "prim-edgesRejected", metricValue: edgesRejected });
-      onStep({ type: "edge", source: par.toString(), target: u.toString() });
-      onStep({ type: "edge", source: u.toString(), target: par.toString() });
       onStep({ type: "prim-averageQueueSize", metricValue: Math.round(queueSizeSum / queueAverageCnt * 100) / 100 });
       if (maxQueueSize < pq.size()) {
         maxQueueSize = pq.size();
         onStep({ type: "prim-maxQueueSize", metricValue: maxQueueSize });
       }
+      onStep({ type: "edge", source: par, target: u });
+      onStep({ type: "edge", source: u, target: par });
       await new Promise((resolve) => setTimeout(resolve, delay));
       if (edgesAccepted === nodes.length - 1) {
         break;

@@ -1,6 +1,6 @@
 export interface Step {
   type: string;
-  source?: string;
-  target?: string;
+  source?: number;
+  target?: number;
   metricValue?: number;
 }

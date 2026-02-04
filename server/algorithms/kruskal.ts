@@ -13,6 +13,7 @@ export async function kruskal(
     (a, b) => a.data.weight - b.data.weight
   );
 
+  let size = 0;
   let edgesAccepted = 0;
   let edgesRejected = 0;
 
@@ -21,14 +22,16 @@ export async function kruskal(
     const v = Number(edge.data.target);
     if (!dsu.isConnected(u, v)) {
       dsu.union(u, v);
+      size += Number(edge.data.weight);
       ++edgesAccepted;
+      onStep({ type: "kruskal-spanningTreeSize", metricValue: size});
       onStep({ type: "kruskal-edgesExamined", metricValue: edgesAccepted + edgesRejected});
       onStep({ type: "kruskal-edgesAccepted", metricValue: edgesAccepted });
       onStep({ type: "kruskal-edgesRejected", metricValue: edgesRejected });
       onStep({ type: "kruskal-DSUFindCnt", metricValue: dsu.getFindCnt() });
       onStep({ type: "kruskal-DSUUnionCnt", metricValue: dsu.getUnionCnt() });
-      onStep({ type: "edge", source: u.toString(), target: v.toString() });
-      onStep({ type: "edge", source: v.toString(), target: u.toString() });
+      onStep({ type: "edge", source: u, target: v });
+      onStep({ type: "edge", source: v, target: u });
       await new Promise((resolve) => setTimeout(resolve, delay));
       if (edgesAccepted === nodes.length - 1) {
         break;

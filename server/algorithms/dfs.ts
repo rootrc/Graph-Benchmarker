@@ -39,7 +39,7 @@ export async function dfs(
           maxStackSize = stack.length;
           onStep({ type: "dfs-maxStackSize", metricValue: maxStackSize });
         }
-        onStep({ type: "edge", source: u.toString(), target: v.toString() });
+        onStep({ type: "edge", source: u, target: v });
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }

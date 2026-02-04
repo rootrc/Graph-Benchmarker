@@ -13,10 +13,10 @@ const algorithmConfig : AlgorithmConfig = {
       space: "O(V + E)",
     },
     metricDisplay: [
-      { type: "dijkstra-nodesVisited", display: "Node Visits" },
-      { type: "dijkstra-edgesVisited", display: "Edge Visits" },
-      { type: "dijkstra-maxQueueSize", display: "Max Queue Size" },
-      { type: "dijkstra-averageQueueSize", display: "Average Queue Size" },
+      { type: "dijkstra-nodesVisited", display: "Nodes Examined" },
+      { type: "dijkstra-edgesVisited", display: "Edges Examined" },
+      { type: "dijkstra-maxQueueSize", display: "Max Priority Queue Size" },
+      { type: "dijkstra-averageQueueSize", display: "Average Priority Queue Size" },
     ],
   }]
 };

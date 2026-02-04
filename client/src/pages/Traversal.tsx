@@ -13,8 +13,8 @@ const algorithmConfig : AlgorithmConfig = {
       space: "O(V)",
     },
     metricDisplay: [
-      { type: "dfs-nodesVisited", display: "Node Visits" },
-      { type: "dfs-edgesVisited", display: "Edge Visits" },
+      { type: "dfs-nodesVisited", display: "Nodes Examined" },
+      { type: "dfs-edgesVisited", display: "Edges Examined" },
       { type: "dfs-maxStackSize", display: "Max Stack Size" },
       { type: "dfs-averageStackSize", display: "Average Stack Size" },
     ],
@@ -28,8 +28,8 @@ const algorithmConfig : AlgorithmConfig = {
       space: "O(V)",
     },
     metricDisplay: [
-      { type: "bfs-nodesVisited", display: "Node Visits" },
-      { type: "bfs-edgesVisited", display: "Edge Visits" },
+      { type: "bfs-nodesVisited", display: "Nodes Examined" },
+      { type: "bfs-edgesVisited", display: "Edges Examined" },
       { type: "bfs-maxQueueSize", display: "Max Queue Size" },
       { type: "bfs-averageQueueSize", display: "Average Queue Size" },
     ],

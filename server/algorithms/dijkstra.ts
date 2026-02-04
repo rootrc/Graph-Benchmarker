@@ -1,7 +1,7 @@
-import { PriorityQueue } from 'priority-queue-typescript';
 import { Step } from './types';
 import type { ElementDefinition } from 'cytoscape';
 import { getWeightedAdjacencyList } from './utility.js';
+import { PriorityQueue } from 'priority-queue-typescript';
 
 export async function dijkstra(
   nodes: ElementDefinition[],
@@ -44,7 +44,7 @@ export async function dijkstra(
           maxQueueSize = pq.size();
           onStep({ type: "dijkstra-maxQueueSize", metricValue: maxQueueSize });
         }
-        onStep({ type: "edge", source: u.toString(), target: v.toString() });
+        onStep({ type: "edge", source: u, target: v });
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
