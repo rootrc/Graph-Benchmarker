@@ -1,4 +1,5 @@
 import { ElementDefinition } from "cytoscape";
+
 export async function getAdjacencyList(nodes: ElementDefinition[], edges: ElementDefinition[]) {
   const maxId = nodes.length;
   const adjacencyList: number[][] = Array.from({ length: maxId + 1 }, () => []);
@@ -20,4 +21,31 @@ export async function getWeightedAdjacencyList(nodes: ElementDefinition[], edges
     adjacencyList[target].push([source, weight]);
   });
   return adjacencyList;
+}
+
+export class DSU {
+  private parent: number[];
+
+  constructor(n: number) {
+    this.parent = Array.from({ length: n + 1 }, (_, i) => i);
+  }
+
+  find(x: number) {
+    if (this.parent[x] !== x) {
+      this.parent[x] = this.find(this.parent[x]);
+    }
+    return this.parent[x];
+  }
+
+  union(a: number, b: number) {
+    a = this.find(a);
+    b = this.find(b);
+    if (a === b) return false;
+    this.parent[b] = a;
+    return true;
+  }
+
+  isConnected(a: number, b: number) {
+    return this.find(a) === this.find(b);
+  }
 }
