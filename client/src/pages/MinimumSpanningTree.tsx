@@ -2,7 +2,7 @@ import type { AlgorithmConfig } from "../components/AlgorithmDisplayBox";
 import AlgorithmPageLayout from "../containers/AlgorithmPageLayout";
 import HeaderLayout from "../containers/HeaderLayout";
 
-const algorithmConfig : AlgorithmConfig = {
+const algorithmConfig: AlgorithmConfig = {
   showStartNode: false,
   algorithms: [{
     title: "Kruskal's",
@@ -19,13 +19,29 @@ const algorithmConfig : AlgorithmConfig = {
       { type: "kruskal-DSUFindCnt", display: "DSU Find Operations" },
       { type: "kruskal-DSUUnionCnt", display: "DSU Union Operations" },
     ],
+  },
+  {
+    title: "Prim's",
+    algorithmName: "prim",
+    description: "Prim's Algorithm",
+    complexity: {
+      time: "O((V + E) logV)",
+      space: "O(V + E)",
+    },
+    metricDisplay: [
+      { type: "prim-edgesExamined", display: "Edges Examined" },
+      { type: "prim-edgesAccepted", display: "Edges Accepted" },
+      { type: "prim-edgesRejected", display: "Edges Rejected" },
+      { type: "prim-maxQueueSize", display: "Max Queue Size" },
+      { type: "prim-averageQueueSize", display: "Average Queue Size" },
+    ],
   }]
 };
 
 export default function WeightedTraversal() {
   return (
     <HeaderLayout>
-      <AlgorithmPageLayout id = {2} type="weighted" algorithmConfig={algorithmConfig} />
+      <AlgorithmPageLayout id={2} type="weighted" algorithmConfig={algorithmConfig} />
     </HeaderLayout>
   )
 }

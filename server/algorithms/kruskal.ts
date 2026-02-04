@@ -1,4 +1,3 @@
-import { PriorityQueue } from 'priority-queue-typescript';
 import { Step } from './types.js';
 import type { ElementDefinition } from 'cytoscape';
 import { DSU } from './utility.js';
@@ -16,25 +15,26 @@ export async function kruskal(
 
   let edgesAccepted = 0;
   let edgesRejected = 0;
+
   for (const edge of sortedEdges) {
     const u = Number(edge.data.source);
     const v = Number(edge.data.target);
-    onStep({ type: "kruskal-edgesExamined", metricValue: edgesAccepted + edgesRejected + 1});
     if (!dsu.isConnected(u, v)) {
       dsu.union(u, v);
       ++edgesAccepted;
+      onStep({ type: "kruskal-edgesExamined", metricValue: edgesAccepted + edgesRejected});
       onStep({ type: "kruskal-edgesAccepted", metricValue: edgesAccepted });
-      onStep({ type: "edge", source: u.toString(), target: v.toString() });
-      onStep({ type: "edge", source: v.toString(), target: u.toString() });
+      onStep({ type: "kruskal-edgesRejected", metricValue: edgesRejected });
       onStep({ type: "kruskal-DSUFindCnt", metricValue: dsu.getFindCnt() });
       onStep({ type: "kruskal-DSUUnionCnt", metricValue: dsu.getUnionCnt() });
+      onStep({ type: "edge", source: u.toString(), target: v.toString() });
+      onStep({ type: "edge", source: v.toString(), target: u.toString() });
       await new Promise((resolve) => setTimeout(resolve, delay));
       if (edgesAccepted === nodes.length - 1) {
         break;
       }
     } else {
       ++edgesRejected;
-      onStep({ type: "kruskal-edgesRejected", metricValue: edgesRejected });
     }
   }
   onStep({ type: "done" });

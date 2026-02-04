@@ -32,7 +32,6 @@ export async function bfs(
         onStep({ type: "bfs-edgesVisited", metricValue: edgesVisited });
         ++nodesVisited;
         onStep({ type: "bfs-nodesVisited", metricValue: nodesVisited });
-        onStep({ type: "edge", source: u.toString(), target: v.toString() });
         queueSizeSum += queue.length;
         ++queueAverageCnt;
         onStep({ type: "bfs-averageQueueSize", metricValue: Math.round(queueSizeSum / queueAverageCnt * 100) / 100 });
@@ -40,6 +39,7 @@ export async function bfs(
           maxQueueSize = queue.length;
           onStep({ type: "bfs-maxQueueSize", metricValue: maxQueueSize });
         }
+        onStep({ type: "edge", source: u.toString(), target: v.toString() });
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }

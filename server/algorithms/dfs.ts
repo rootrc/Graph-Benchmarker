@@ -32,7 +32,6 @@ export async function dfs(
         onStep({ type: "dfs-edgesVisited", metricValue: edgesVisited });
         ++nodesVisited;
         onStep({ type: "dfs-nodesVisited", metricValue: nodesVisited });
-        onStep({ type: "edge", source: u.toString(), target: v.toString() });
         stackSizeSum += stack.length;
         ++queueAverageCnt;
         onStep({ type: "dfs-averageStackSize", metricValue: Math.round(stackSizeSum / queueAverageCnt * 100) / 100 });
@@ -40,6 +39,7 @@ export async function dfs(
           maxStackSize = stack.length;
           onStep({ type: "dfs-maxStackSize", metricValue: maxStackSize });
         }
+        onStep({ type: "edge", source: u.toString(), target: v.toString() });
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }

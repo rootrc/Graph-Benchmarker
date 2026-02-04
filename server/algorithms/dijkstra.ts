@@ -37,7 +37,6 @@ export async function dijkstra(
         onStep({ type: "dijkstra-edgesVisited", metricValue: edgesVisited });
         nodesVisited++;
         onStep({ type: "dijkstra-nodesVisited", metricValue: nodesVisited });
-        onStep({ type: "edge", source: u.toString(), target: v.toString() });
         queueSizeSum += pq.size();
         ++queueAverageCnt;
         onStep({ type: "dijkstra-averageQueueSize", metricValue: Math.round(queueSizeSum / queueAverageCnt * 100) / 100 });
@@ -45,6 +44,7 @@ export async function dijkstra(
           maxQueueSize = pq.size();
           onStep({ type: "dijkstra-maxQueueSize", metricValue: maxQueueSize });
         }
+        onStep({ type: "edge", source: u.toString(), target: v.toString() });
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
