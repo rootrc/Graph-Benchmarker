@@ -3,10 +3,10 @@ import { Step } from '../algorithms/types.js';
 import { dfs } from '../algorithms/dfs.js';
 import { bfs } from '../algorithms/bfs.js';
 import { dijkstra } from '../algorithms/dijkstra.js';
+import { kruskal } from '../algorithms/kruskal.js';
 import type { ElementDefinition } from 'cytoscape';
 import fs from 'fs/promises';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
 const router = Router();
 
@@ -64,6 +64,10 @@ router.get('/dfs', async (req: Request, res: Response) => {
 
 router.get('/dijkstra', async (req: Request, res: Response) => {
   await runAlgorithm(req, res, dijkstra);
+});
+
+router.get('/kruskal', async (req: Request, res: Response) => {
+  await runAlgorithm(req, res, kruskal);
 });
 
 export default router;

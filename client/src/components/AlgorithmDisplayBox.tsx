@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 export type Algorithm = {
   title: string;
+  algorithmName: string;
   description: string;
   complexity: Complexity;
   metricDisplay: MetricDisplay[];
@@ -18,12 +19,13 @@ export type MetricDisplay = {
 };
 
 export default function AlgorithmDisplayBox({
-  index, algorithm, showAlgorithm, setShowAlgorithm, liveSteps }: {
+  index, algorithm, showAlgorithm, setShowAlgorithm, liveSteps, showHide}: {
     index: number;
     algorithm: Algorithm;
     showAlgorithm: boolean;
     setShowAlgorithm: React.Dispatch<React.SetStateAction<boolean>>;
     liveSteps: { type: string; metricValue: number }[]
+    showHide: boolean;
   }) {
   const { title, description, complexity } = algorithm;
   const [metrics, setMetrics] = useState<Record<string, number>>({});
@@ -73,14 +75,14 @@ export default function AlgorithmDisplayBox({
             className={`ml-2 mt-1 w-4 h-4 transition-all duration-300 ${showAlgorithm ? (index === 0 ? "bg-blue-500" : "bg-red-500") : "bg-gray-500"} rounded-full`}
           />
         </h1>
+        {showHide &&
         <button
           onClick={() => setShowAlgorithm(prev => !prev)}
           className={`px-3 py-1.5 rounded-md bg-slate-800 text-slate-100 border border-slate-700 hover:bg-slate-700 hover:border-slate-500 transition-all duration-300 ease-in-out cursor-pointer
           ${!showAlgorithm ? 'opacity-40' : 'hover:opacity-70'}`}
-          aria-label="Hide algorithm"
         >
           Hide
-        </button>
+        </button>}
       </div>
       <p className="text-slate-300">{description}</p>
 

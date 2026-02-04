@@ -7,8 +7,8 @@ const algorithms = [
     algorithmName: "dijkstra",
     description: "Dijkstra's algorithm",
     complexity: {
-      time: "O((E + V) logV)",
-      space: "O(E + V)",
+      time: "O((V + E) logV)",
+      space: "O(V + E)",
     },
     metricDisplay: [
       { type: "dijkstra-nodesVisited", display: "Node Visits" },
@@ -22,7 +22,7 @@ const algorithms = [
 export default function WeightedTraversal() {
   return (
     <HeaderLayout>
-      <AlgorithmPageLayout id = {1} type="weighted" algorithmName="dijkstra" algorithmDisplayBox={algorithms} />
+      <AlgorithmPageLayout id = {1} type="weighted" algorithmDisplayBox={algorithms} />
     </HeaderLayout>
   )
 }

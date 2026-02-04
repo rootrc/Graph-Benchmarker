@@ -2,11 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { useLocalStorage } from "@uidotdev/usehooks";
-
-type Section = {
-  title: string;
-  links: { name: string; to: string }[];
-};
+import type { Section } from "../App";
 
 export default function SideBarSection({ section }: { section: Section }) {
   const location = useLocation();

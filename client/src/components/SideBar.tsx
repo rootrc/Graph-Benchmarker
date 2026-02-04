@@ -1,16 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import SideBarSection from "../containers/SideBarSection";
 import { useServerConnectionStatus } from "../hooks/useServerConnectionStatus";
-
-const menuSections = [
-  {
-    title: "Simple Algorithms",
-    links: [
-      { name: "Traversal", to: "/algorithms/traversal" },
-      { name: "Weighted Traversal", to: "/algorithms/weighted-traversal" },
-    ],
-  },
-];
+import { menuSections } from "../App";
 
 export default function SideBar({ open }: { open: boolean }) {
   const location = useLocation();

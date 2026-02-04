@@ -6,7 +6,7 @@ import { useLocalStorage } from '@uidotdev/usehooks';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function AlgorithmPageLayout({id, type, algorithmName, algorithmName1, algorithmDisplayBox }: {id: number, type: string; algorithmName: string; algorithmName1?: string; algorithmDisplayBox: Algorithm[] }) {
+export default function AlgorithmPageLayout({ id, type, algorithmDisplayBox }: { id: number, type: string; algorithmDisplayBox: Algorithm[] }) {
   let graphName = "";
   if (type === "unweighted") {
     graphName = "test.json";
@@ -26,7 +26,7 @@ export default function AlgorithmPageLayout({id, type, algorithmName, algorithmN
 
   useEffect(() => {
     if (!runAlgorithm) return;
-    const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmName}?graphFile=${graphName}&delay=${delay}`);
+    const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmDisplayBox[0].algorithmName}?graphFile=${graphName}&delay=${delay}`);
     eventSource.onmessage = (event) => {
       const { type, source, target, metricValue } = JSON.parse(event.data);
       if (type === "done") {
@@ -43,11 +43,11 @@ export default function AlgorithmPageLayout({id, type, algorithmName, algorithmN
       eventSource.close();
     };
 
-  }, [runAlgorithm, graphName, algorithmName]);
-  if (algorithmName1) {
+  }, [runAlgorithm, graphName]);
+  if (algorithmDisplayBox[1]) {
     useEffect(() => {
       if (!runAlgorithm) return;
-      const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmName1}?graphFile=${graphName}&delay=${delay}`);
+      const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmDisplayBox[1].algorithmName}?graphFile=${graphName}&delay=${delay}`);
       eventSource.onmessage = (event) => {
         const { type, source, target, metricValue } = JSON.parse(event.data);
         if (type === "done") {
@@ -64,7 +64,7 @@ export default function AlgorithmPageLayout({id, type, algorithmName, algorithmN
         eventSource.close();
       };
 
-    }, [runAlgorithm, graphName, algorithmName1]);
+    }, [runAlgorithm, graphName]);
   }
 
   const restart = () => {
@@ -84,6 +84,7 @@ export default function AlgorithmPageLayout({id, type, algorithmName, algorithmN
             showAlgorithm={setters[index]}
             setShowAlgorithm={setters1[index]}
             liveSteps={metricSteps}
+            showHide={algorithmDisplayBox[1] !== undefined}
           />
         ))}
       </div>
