@@ -17,7 +17,7 @@ export const menuSections = [
     links: [
       { name: "Traversal", to: "/algorithms/traversal", element: <Traversal />},
       { name: "Weighted Traversal", to: "/algorithms/weighted-traversal", element: <UnweightedSSSP /> },
-      { name: "Minimum-Spanning-Tree", to: "/algorithms/minimum-spanning-tree", element: <MinimumSpanningTree /> },
+      { name: "Minimum Spanning Tree", to: "/algorithms/minimum-spanning-tree", element: <MinimumSpanningTree /> },
     ],
   },
 ];
