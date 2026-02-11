@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Traversal from "./pages/Traversal";
 import UnweightedSSSP from "./pages/WeightedTraversal";
 import MinimumSpanningTree from "./pages/MinimumSpanningTree";
+import NegativeEdges from "./pages/NegativeEdges";
 
 
 export type Section = {
@@ -13,12 +14,13 @@ export type Section = {
 
 export const menuSections = [
   {
-    title: "Simple Algorithms",
+    title: "Graph Algorithms",
     links: [
       { name: "Traversal", to: "/algorithms/traversal", element: <Traversal />},
       { name: "Weighted Traversal", to: "/algorithms/weighted-traversal", element: <UnweightedSSSP /> },
+      // { name: "Negative Edges", to: "/algorithms/negative-edges", element: <NegativeEdges /> },
       { name: "Minimum Spanning Tree", to: "/algorithms/minimum-spanning-tree", element: <MinimumSpanningTree /> },
-    ],
+    ]
   },
 ];
 

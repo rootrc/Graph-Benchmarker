@@ -43,7 +43,7 @@ const algorithmConfig: AlgorithmConfig = {
 export default function WeightedTraversal() {
   return (
     <HeaderLayout>
-      <AlgorithmPageLayout id={2} type="weighted" algorithmConfig={algorithmConfig} />
+      <AlgorithmPageLayout id={3} type="weighted" algorithmConfig={algorithmConfig} />
     </HeaderLayout>
   )
 }

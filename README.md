@@ -34,7 +34,6 @@ You can find it [HERE](https://graph-benchmarker.vercel.app/)
   - Prim's Algorithm
  
 - **Planned Algorithms:**
-  - A* search algorithm
   - Bellman-Ford Algorithm
   - Toposort
   - Khan's Algorithm

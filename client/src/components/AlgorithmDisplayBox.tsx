@@ -36,10 +36,10 @@ export default function AlgorithmDisplayBox({
   const [metrics, setMetrics] = useState<Record<string, number>>({});
   const getComplexityClass = (complexity: string) => {
     const c = complexity;
-    if (c.includes("2") || c.includes("!") || c.includes("³")) {
+    if (c.includes("²") || c.includes("³") || c.includes("2") || c.includes("!") || c.includes("VE")) {
       return "text-red-500";
     }
-    if (c.includes("²") || c.includes("V logE") || c.includes("V logV") || c.includes("E logE") || c.includes("E logV")
+    if (c.includes("V logE") || c.includes("V logV") || c.includes("E logE") || c.includes("E logV")
       || c.includes("V) logE") || c.includes("V) logV") || c.includes("E) logE") || c.includes("E) logV")) {
       return "text-orange-500";
     }
