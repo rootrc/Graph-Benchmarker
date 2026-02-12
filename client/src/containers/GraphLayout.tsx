@@ -5,9 +5,9 @@ import { useEffect, useRef } from "react";
 import Slider from "./Slider";
 
 export default function GraphLayout({
-  id, graphName, showStartNode, runAlgorithm, setRunAlgorithm, restart, setDelay, showAlgorithm, showAlgorithm1, liveSteps }: {
+  id, graphId, showStartNode, runAlgorithm, setRunAlgorithm, restart, setDelay, showAlgorithm, showAlgorithm1, liveSteps }: {
     id: number;
-    graphName: string;
+    graphId: number;
     showStartNode: boolean;
     runAlgorithm: boolean;
     setRunAlgorithm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,7 +20,7 @@ export default function GraphLayout({
       source: string; target: string
     }[]
   }) {
-  const { data, error, loading } = useFileFetcher<ElementDefinition[]>(graphName);
+  const { data, error, loading } = useFileFetcher<ElementDefinition[]>(graphId);
   const graphRef = useRef<Core | null>(null);
 
   const prevStepsLength = useRef(0);

@@ -25,3 +25,6 @@ dist-ssr
 
 *.vite
 *.exe
+*.env
+!.env.example
+server/data

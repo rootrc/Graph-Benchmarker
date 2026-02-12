@@ -9,6 +9,18 @@ import type { ElementDefinition } from 'cytoscape';
 import fs from 'fs/promises';
 import path from 'path';
 
+import dotenv from "dotenv";
+import { Pool } from "pg";
+
+dotenv.config();
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+
 const router = Router();
 
 async function runAlgorithm(
@@ -25,19 +37,27 @@ async function runAlgorithm(
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
 
-  const graphFile = req.query.graphFile as string;
+  const id = Number(req.query.graphId);
   const delay = Number(req.query.delay);
-  
+
   let graphData: ElementDefinition[];
   try {
-    const filePath = path.join(process.cwd(), "data", graphFile);
-    const fileContent = await fs.readFile(filePath, 'utf-8');
-    graphData = JSON.parse(fileContent).elements;
-  } catch (error) {
-    res.write(`Could not load graph file: ${graphFile}\n\n`);
-    res.end();
+    const result = await pool.query(
+      `SELECT graph_data
+     FROM graphs_json
+     WHERE graph_id = $1`,
+      [id]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Graph not found" });
+    }
+    graphData = result.rows[0].graph_data.elements;
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
     return;
   }
+  console.log(graphData);
 
   const nodes = graphData.filter(el => el.data && !('source' in el.data));
   const edges = graphData.filter(el => el.data && 'source' in el.data);

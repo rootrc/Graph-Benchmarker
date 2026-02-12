@@ -7,13 +7,13 @@ import { useLocalStorage } from '@uidotdev/usehooks';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function AlgorithmPageLayout({ id, type, algorithmConfig: algorithmConfig }: { id: number, type: string; algorithmConfig: AlgorithmConfig }) {
-  let graphName = "";
+  let graphId = 0;
   if (type === "unweighted") {
-    graphName = "test.json";
+    graphId = 1;
   } else if (type === "weighted") {
-    graphName = "testw.json";
+    graphId = 2;
   } else {
-    graphName = "test.json";
+    graphId = 1;
   }
   const [runAlgorithm, setRunAlgorithm] = useState(false);
   const [showAlgorithm, setShowAlgorithm] = useLocalStorage(`show-algorithm-${id}`, true);
@@ -26,7 +26,7 @@ export default function AlgorithmPageLayout({ id, type, algorithmConfig: algorit
 
   useEffect(() => {
     if (!runAlgorithm) return;
-    const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmConfig.algorithms[0].algorithmName}?graphFile=${graphName}&delay=${delay}`);
+    const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmConfig.algorithms[0].algorithmName}?graphId=${graphId}&delay=${delay}`);
     eventSource.onmessage = (event) => {
       const { type, source, target, metricValue } = JSON.parse(event.data);
       if (type === "done") {
@@ -43,11 +43,11 @@ export default function AlgorithmPageLayout({ id, type, algorithmConfig: algorit
       eventSource.close();
     };
 
-  }, [runAlgorithm, graphName]);
+  }, [runAlgorithm, graphId]);
   if (algorithmConfig.algorithms[1]) {
     useEffect(() => {
       if (!runAlgorithm) return;
-      const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmConfig.algorithms[1].algorithmName}?graphFile=${graphName}&delay=${delay}`);
+      const eventSource = new EventSource(`${API_URL}/algorithm/${algorithmConfig.algorithms[1].algorithmName}?graphId=${graphId}&delay=${delay}`);
       eventSource.onmessage = (event) => {
         const { type, source, target, metricValue } = JSON.parse(event.data);
         if (type === "done") {
@@ -64,7 +64,7 @@ export default function AlgorithmPageLayout({ id, type, algorithmConfig: algorit
         eventSource.close();
       };
 
-    }, [runAlgorithm, graphName]);
+    }, [runAlgorithm, graphId]);
   }
   
   const restart = () => {
@@ -90,7 +90,7 @@ export default function AlgorithmPageLayout({ id, type, algorithmConfig: algorit
       </div>
       <GraphLayout
         id={id}
-        graphName={graphName}
+        graphId={graphId}
         runAlgorithm={runAlgorithm}
         showStartNode={algorithmConfig.showStartNode}
         setRunAlgorithm={setRunAlgorithm}

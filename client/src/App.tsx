@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import Traversal from "./pages/Traversal";
 import UnweightedSSSP from "./pages/WeightedTraversal";
 import MinimumSpanningTree from "./pages/MinimumSpanningTree";
-import NegativeEdges from "./pages/NegativeEdges";
+// import NegativeEdges from "./pages/NegativeEdges";
 
 
 export type Section = {
