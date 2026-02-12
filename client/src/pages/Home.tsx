@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import HeaderLayout from "../containers/HeaderLayout";
-import test from "../hooks/test";
 
 export default function Home() {
-  test();
   return (
     <HeaderLayout>
       <div className="min-h-screen">

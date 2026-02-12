@@ -13,7 +13,7 @@ export default function useFileFetcher<T = unknown>(fileid: number) {
 
     async function fetchFile() {
       try {
-        const res = await axios.get(`${API_URL}/graph/${fileid}`);
+        const res = await axios.get(`${API_URL}/database/select/${fileid}`);
         if (!cancelled) setData(res.data.elements);
       } catch (err) {
         if (!cancelled) setError((err as Error).message);

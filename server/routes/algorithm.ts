@@ -1,25 +1,14 @@
 import { Router, Request, Response } from 'express';
 import { Step } from '../algorithms/types.js';
+import type { ElementDefinition } from 'cytoscape';
+import { select } from './database.js';
 import { dfs } from '../algorithms/dfs.js';
 import { bfs } from '../algorithms/bfs.js';
 import { dijkstra } from '../algorithms/dijkstra.js';
 import { kruskal } from '../algorithms/kruskal.js';
 import { prim } from '../algorithms/prim.js';
-import type { ElementDefinition } from 'cytoscape';
-import fs from 'fs/promises';
-import path from 'path';
 
-import dotenv from "dotenv";
-import { Pool } from "pg";
 
-dotenv.config();
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
 
 const router = Router();
 
@@ -42,12 +31,7 @@ async function runAlgorithm(
 
   let graphData: ElementDefinition[];
   try {
-    const result = await pool.query(
-      `SELECT graph_data
-     FROM graphs_json
-     WHERE graph_id = $1`,
-      [id]
-    );
+    const result = await select(id);
     if (result.rowCount === 0) {
       return res.status(404).json({ error: "Graph not found" });
     }
@@ -57,7 +41,6 @@ async function runAlgorithm(
     res.status(500).send("Server Error");
     return;
   }
-  console.log(graphData);
 
   const nodes = graphData.filter(el => el.data && !('source' in el.data));
   const edges = graphData.filter(el => el.data && 'source' in el.data);
